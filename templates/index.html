@@ -9,6 +9,7 @@
 </head>
 <body>
     <div class="container">
+        <audio id="clickSound" src="{{ url_for('static', filename='click.mp3') }}" preload="auto"></audio>
         <div class="progress-bar">
             <div id="progress-fill"></div>
         </div>
@@ -28,7 +29,7 @@
             </div>
         </div>
         <div class="rankings">
-            <h2>Rankings</h2>
+            <h2>Ranking</h2>
             <ul id="rankingsList"></ul>
         </div>
         <button id="selectDirectoryBtn" class="select-directory-btn">Select Local Directory</button>
@@ -55,6 +56,7 @@
         }
 
         function selectWinner(winnerImage) {
+            playClickSound();
             const winner = currentImages[winnerImage];
             const loser = winnerImage === 'image1' ? currentImages.image2 : currentImages.image1;
 
@@ -162,6 +164,12 @@
                     alert('An error occurred while exporting rankings: ' + error.message);
                 });
         });
+
+        function playClickSound() {
+            const clickSound = document.getElementById('clickSound');
+            clickSound.currentTime = 0;
+            clickSound.play();
+        }
     </script>
 </body>
 </html>
