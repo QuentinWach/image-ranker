@@ -99,7 +99,7 @@ button:active {
     background-color: #f7f7f7;
     border: 0px solid #000000;
     border-radius: 5px;
-    padding: 5px 15px;
+    padding: 5px 10px;
     justify-content: space-between;
 }
 
@@ -114,17 +114,23 @@ button:active {
 .rank {
     font-weight: bold;
     margin-right: 10px;
-    width: 30px;
+    width: 40px;
+}
+
+.image-name {
+    flex-grow: 1;
+    margin-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .elo {
-    margin-left: auto;
-    margin-right: 20px;
+    margin-right: 3px;
 }
 
-.count {
-    width: 50px;
-    text-align: right;
+.uncertainty {
+    margin-right: 30px;
 }
 
 .votes {
@@ -143,7 +149,7 @@ button:active {
 .material-icons {
     font-size: 18px;
     margin-right: 2px;
-    color: #000000; /* Grey color for the icons */
+    color: #000000;
 }
 
 .progress-bar {

@@ -1,24 +1,22 @@
-class EloRanking:
-    def __init__(self, k_factor=32, initial_rating=1400):
-        self.k_factor = k_factor
-        self.initial_rating = initial_rating
+from trueskill import Rating, rate_1vs1
+
+class TrueSkillRanking:
+    def __init__(self, mu=25.0, sigma=8.33):
+        self.mu = mu
+        self.sigma = sigma
         self.ratings = {}
         self.counts = {}
         self.upvotes = {}
         self.downvotes = {}
 
     def get_rating(self, player):
-        return self.ratings.get(player, self.initial_rating)
+        return self.ratings.get(player, Rating(mu=self.mu, sigma=self.sigma))
 
-    def update_elo(self, winner, loser):
+    def update_rating(self, winner, loser):
         winner_rating = self.get_rating(winner)
         loser_rating = self.get_rating(loser)
 
-        expected_winner = 1 / (1 + 10 ** ((loser_rating - winner_rating) / 400))
-        expected_loser = 1 - expected_winner
-
-        new_winner_rating = winner_rating + self.k_factor * (1 - expected_winner)
-        new_loser_rating = loser_rating + self.k_factor * (0 - expected_loser)
+        new_winner_rating, new_loser_rating = rate_1vs1(winner_rating, loser_rating)
 
         self.ratings[winner] = new_winner_rating
         self.ratings[loser] = new_loser_rating
@@ -30,4 +28,8 @@ class EloRanking:
         self.downvotes[loser] = self.downvotes.get(loser, 0) + 1
 
     def get_rankings(self):
-        return sorted(self.ratings.items(), key=lambda x: x[1], reverse=True)
+        return sorted(self.ratings.items(), key=lambda x: x[1].mu, reverse=True)
+
+    def get_uncertainty(self, player):
+        rating = self.get_rating(player)
+        return rating.sigma

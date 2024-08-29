@@ -103,7 +103,9 @@
                         li.innerHTML = `
                             <span class="rank">#${index + 1}</span>
                             <img src="${item.image}" alt="Ranked image">
-                            <span class="elo">${Math.round(item.elo)}</span>
+                            <span class="image-name">${item.image.split('/').pop()}</span>
+                            <span class="elo">ELO: ${Math.round(item.elo)}</span>
+                            <span class="uncertainty">± ${Math.round(item.uncertainty)}</span>
                             <span class="votes">
                                 <span class="up-arrow"><i class="material-icons">arrow_upward</i>${item.upvotes}</span>
                                 <span class="down-arrow"><i class="material-icons">arrow_downward</i>${item.downvotes}</span>

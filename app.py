@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify, send_file, Response
 import os
 import random
 import itertools
-from elo import EloRanking
+from elo import TrueSkillRanking
 import tkinter as tk
 from tkinter import filedialog
 import csv
@@ -12,7 +12,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
-elo_ranking = EloRanking()
+elo_ranking = TrueSkillRanking()
 
 IMAGE_FOLDER = 'static/images'
 
@@ -58,6 +58,8 @@ def get_images():
 @app.route('/serve_image')
 def serve_image():
     image_path = request.args.get('path')
+    if image_path.startswith('/serve_image'):
+        image_path = image_path.split('=', 1)[1]
     return send_file(image_path, mimetype='image/jpeg')
 
 @app.route('/update_elo', methods=['POST'])
@@ -65,22 +67,27 @@ def update_elo():
     data = request.json
     winner = data['winner']
     loser = data['loser']
-    elo_ranking.update_elo(winner, loser)
+    elo_ranking.update_rating(winner, loser)
     return jsonify({'success': True})
 
 @app.route('/get_rankings')
 def get_rankings():
-    rankings = elo_ranking.get_rankings()
-    return jsonify([
-        {
-            'image': image,
-            'elo': elo,
-            'count': elo_ranking.counts.get(image, 0),
-            'upvotes': elo_ranking.upvotes.get(image, 0),
-            'downvotes': elo_ranking.downvotes.get(image, 0)
-        }
-        for image, elo in rankings
-    ])
+    try:
+        rankings = elo_ranking.get_rankings()
+        return jsonify([
+            {
+                'image': image,
+                'elo': rating.mu,
+                'uncertainty': rating.sigma,
+                'count': elo_ranking.counts.get(image, 0),
+                'upvotes': elo_ranking.upvotes.get(image, 0),
+                'downvotes': elo_ranking.downvotes.get(image, 0)
+            }
+            for image, rating in rankings
+        ])
+    except Exception as e:
+        app.logger.error(f"Error in get_rankings: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/get_progress')
 def get_progress():
@@ -99,7 +106,7 @@ def select_directory():
         if directory:
             global IMAGE_FOLDER, elo_ranking, image_pairs, current_pair_index
             IMAGE_FOLDER = directory
-            elo_ranking = EloRanking()  # Reset the ELO rankings
+            elo_ranking = TrueSkillRanking()  # Reset the ELO rankings
             initialize_image_pairs()
             current_pair_index = 0  # Reset the current pair index
             return jsonify({'success': True})
@@ -116,15 +123,16 @@ def export_rankings():
         app.logger.info(f"Rankings: {rankings}")
         if not rankings:
             app.logger.warning("No rankings data available")
-            return jsonify({'error': 'No rankings data available'}), 400
+            return jsonify({'error': 'No rankings data available. Please make some comparisons first.'}), 400
 
         output = StringIO()
         writer = csv.writer(output)
-        writer.writerow(['Image', 'ELO', 'Upvotes', 'Downvotes'])
-        for image, elo in rankings:
+        writer.writerow(['Image', 'ELO', 'Uncertainty', 'Upvotes', 'Downvotes'])
+        for image, rating in rankings:
             writer.writerow([
                 os.path.basename(image),
-                round(elo, 2),
+                round(rating.mu, 2),
+                round(rating.sigma, 2),
                 elo_ranking.upvotes.get(image, 0),
                 elo_ranking.downvotes.get(image, 0)
             ])

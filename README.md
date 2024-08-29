@@ -16,7 +16,7 @@
 ![alt text](static/header.png)
 
 ## Basic Features
-- **ELO Algorithm**
+- **TrueSkill ELO Algorithm** - An advanced algorithm that takes into account the uncertainty in the ratings and updates the ranks **globally** after each comparison since if A > B and B > C then we can infer that A > C. This achieves accurate results much faster than a typical ELO algorithm.
 - **Beautiful Web GUI**
 - **Import Images from Local Folder**
 - **Export Ranking Data as .CSV**
