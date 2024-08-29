@@ -8,6 +8,12 @@ h2 {
     text-align: center;
 }
 
+p {
+    margin: 0;
+    padding: 0;
+
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -58,11 +64,11 @@ button {
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #666;
-    color: white;
-    border: none;
     transition: background-color 0.1s, transform 0.05s;
     width: 48%;
+    border: 2px solid #000000;
+    color: #000000;
+    background-color: #ffffff;
 }
 
 button:hover {
@@ -70,6 +76,7 @@ button:hover {
     transform: scale(1.02);
     transform: translateY(-3px);
     box-shadow: 0 3px 5px #00000086;
+    color: white;
 }
 
 button:active {
@@ -90,7 +97,7 @@ button:active {
     align-items: center;
     margin-bottom: 5px;
     background-color: #f7f7f7;
-    border: 1px solid #cecece;
+    border: 0px solid #000000;
     border-radius: 5px;
     padding: 5px 15px;
     justify-content: space-between;
@@ -136,7 +143,7 @@ button:active {
 .material-icons {
     font-size: 18px;
     margin-right: 2px;
-    color: #888; /* Grey color for the icons */
+    color: #000000; /* Grey color for the icons */
 }
 
 .progress-bar {
@@ -165,20 +172,22 @@ button:active {
     position: fixed;
     top: 20px;
     left: 20px;
-    width: 200px;
+    width: 220px;
     padding: 10px 15px;
     font-size: 14px;
-    background-color: #666;
-    color: white;
-    border: none;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 2px solid #000000;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.1s, transform 0.05s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.select-directory-btn:hover {
-    background-color: #000000;
-    transform: scale(1.05);
+.select-directory-btn:hover .material-icons {
+    color: white;
 }
 
 .select-directory-btn:active {
@@ -189,22 +198,88 @@ button:active {
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 200px;
+    width: 220px;
     padding: 10px 15px;
     font-size: 14px;
-    background-color: #666;
-    color: white;
-    border: none;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 2px solid #000000;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.1s, transform 0.05s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.export-rankings-btn:hover .material-icons {
+    color: white;
 }
 
 .export-rankings-btn:hover {
     background-color: #000000;
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .export-rankings-btn:active {
     transform: scale(0.98);
+}
+
+.footer {
+    background-color: #f8f8f8;
+    padding: 30px 0;
+    margin-top: 50px;
+    border-top: 1px solid #e7e7e7;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    color: #333;
+}
+
+.footer p {
+    margin-bottom: 0px;
+    line-height: 1.5;
+    opacity: 0.5;
+}
+
+.footer a {
+    color: #000000;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #004080;
+    text-decoration: underline;
+    text-shadow: 0 0 5px #000000;
+}
+
+.footer-links {
+    margin-top: 20px;
+}
+
+.footer-links a {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 5px 10px;
+    border: 1px solid #0066cc;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    background-color: #0066cc;
+    color: white;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .footer-links a {
+        display: block;
+        margin: 10px auto;
+        max-width: 200px;
+    }
 }

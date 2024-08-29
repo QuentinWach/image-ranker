@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image ELO Ranker</title>
+    <meta name="description" content="Image Ranker: A tool for making aesthetic choices, general decisions, and generating training data for deep learning models.">
+    <meta name="keywords" content="image ranking, ELO system, aesthetic choices, decision making, deep learning, training data">
+    <meta name="author" content="Quentin Wach">
+    <title>Image ELO Ranker - Make Better Decisions</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -29,12 +32,28 @@
             </div>
         </div>
         <div class="rankings">
-            <h2>Ranking</h2>
+            <h2 style="opacity: 0.2;">Ranking</h2>
             <ul id="rankingsList"></ul>
         </div>
-        <button id="selectDirectoryBtn" class="select-directory-btn">Select Local Directory</button>
-        <button id="exportRankingsBtn" class="export-rankings-btn">Export Rankings</button>
+        <button id="selectDirectoryBtn" class="select-directory-btn">
+            <span class="material-icons">upload</span>
+            Select Local Directory
+        </button>
+        <button id="exportRankingsBtn" class="export-rankings-btn">
+            <span class="material-icons">save</span>
+            Export Rankings
+        </button>
     </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Made during a sleepless night by <a href="https://github.com/QuentinWach" target="_blank" rel="noopener noreferrer">Quentin Wach</a></p>
+            <p>This app is designed to help you make aesthetic choices and general decisions.</p>
+            <p>But it is especially useful for generating data for deep learning models, such as fine-tuning tasks.</p>
+        </div>
+    </footer>
+
+
     <script>
         let currentImages = {};
 
