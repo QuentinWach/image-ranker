@@ -16,10 +16,10 @@
 ![alt text](static/header.png)
 
 ## Basic Features
-- **ELO Algorithm**: Used to rank images based on pairwise comparisons.
-- **Beautiful Web GUI**: Used to make it easy to use.
-- **Import Images from Local Folder**: Used to easily import images from your computer.
-- **Export Ranking Data as .CSV**: Used to export the ranking data so you can use it in other tools.
+- **ELO Algorithm**
+- **Beautiful Web GUI**
+- **Import Images from Local Folder**
+- **Export Ranking Data as .CSV**
 
 ## Installation & Usage
 1. Clone the repository:
