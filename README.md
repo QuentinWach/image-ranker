@@ -15,7 +15,6 @@
 
 ![alt text](static/header.png)
 
-
 ## Basic Features
 - **ELO Algorithm**: Used to rank images based on pairwise comparisons.
 - **Beautiful Web GUI**: Used to make it easy to use.
