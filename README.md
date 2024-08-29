@@ -2,13 +2,13 @@
   <h1>Image Ranker</h1>
   <p>
     <a href="https://opensource.org/licenses/MIT">
-      <img src="https://img.shields.io/github/license/QuentinWach/1v1-image-ranker" alt="License">
+      <img src="https://img.shields.io/github/license/QuentinWach/image-ranker" alt="License">
     </a>
     <a href="https://github.com/QuentinWach/1v1-image-ranker/stargazers">
-      <img src="https://img.shields.io/github/stars/QuentinWach/1v1-image-ranker" alt="GitHub stars">
+      <img src="https://img.shields.io/github/stars/QuentinWach/image-ranker" alt="GitHub stars">
     </a>
     <a href="https://github.com/QuentinWach/1v1-image-ranker/commits/main">
-      <img src="https://img.shields.io/github/last-commit/QuentinWach/1v1-image-ranker" alt="Last update">
+      <img src="https://img.shields.io/github/last-commit/QuentinWach/image-ranker" alt="Last update">
     </a>
   </p>
 </div>
