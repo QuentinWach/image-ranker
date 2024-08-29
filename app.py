@@ -1,8 +1,15 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file, Response
 import os
 import random
 import itertools
 from elo import EloRanking
+import tkinter as tk
+from tkinter import filedialog
+import csv
+from io import StringIO
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 elo_ranking = EloRanking()
@@ -40,13 +47,18 @@ def get_images():
     img1, img2 = image_pairs[current_pair_index]
     current_pair_index += 1
     return jsonify({
-        'image1': '/' + os.path.relpath(img1).replace('\\', '/'),
-        'image2': '/' + os.path.relpath(img2).replace('\\', '/'),
+        'image1': '/serve_image?path=' + img1.replace('\\', '/'),
+        'image2': '/serve_image?path=' + img2.replace('\\', '/'),
         'progress': {
             'current': current_pair_index,
             'total': len(image_pairs)
         }
     })
+
+@app.route('/serve_image')
+def serve_image():
+    image_path = request.args.get('path')
+    return send_file(image_path, mimetype='image/jpeg')
 
 @app.route('/update_elo', methods=['POST'])
 def update_elo():
@@ -75,6 +87,79 @@ def get_progress():
     return jsonify({
         'current': current_pair_index,
         'total': len(image_pairs)
+    })
+
+@app.route('/select_directory', methods=['POST'])
+def select_directory():
+    try:
+        root = tk.Tk()
+        root.withdraw()
+        directory = filedialog.askdirectory(master=root)
+        root.destroy()
+        if directory:
+            global IMAGE_FOLDER, elo_ranking, image_pairs, current_pair_index
+            IMAGE_FOLDER = directory
+            elo_ranking = EloRanking()  # Reset the ELO rankings
+            initialize_image_pairs()
+            current_pair_index = 0  # Reset the current pair index
+            return jsonify({'success': True})
+        else:
+            return jsonify({'success': False, 'error': 'No directory selected'})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/export_rankings')
+def export_rankings():
+    app.logger.info("Export rankings route called")
+    try:
+        rankings = elo_ranking.get_rankings()
+        app.logger.info(f"Rankings: {rankings}")
+        if not rankings:
+            app.logger.warning("No rankings data available")
+            return jsonify({'error': 'No rankings data available'}), 400
+
+        output = StringIO()
+        writer = csv.writer(output)
+        writer.writerow(['Image', 'ELO', 'Upvotes', 'Downvotes'])
+        for image, elo in rankings:
+            writer.writerow([
+                os.path.basename(image),
+                round(elo, 2),
+                elo_ranking.upvotes.get(image, 0),
+                elo_ranking.downvotes.get(image, 0)
+            ])
+        
+        output.seek(0)
+        app.logger.info("CSV data created successfully")
+        return Response(
+            output.getvalue(),
+            mimetype='text/csv',
+            headers={"Content-disposition": "attachment; filename=image_rankings.csv"}
+        )
+    except Exception as e:
+        app.logger.error(f"Error in export_rankings: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/test_csv')
+def test_csv():
+    output = StringIO()
+    writer = csv.writer(output)
+    writer.writerow(['Column1', 'Column2'])
+    writer.writerow(['Data1', 'Data2'])
+    output.seek(0)
+    return send_file(
+        output,
+        mimetype='text/csv',
+        as_attachment=True,
+        download_name='test.csv'
+    )
+
+@app.route('/debug_rankings')
+def debug_rankings():
+    return jsonify({
+        'rankings': elo_ranking.get_rankings(),
+        'upvotes': elo_ranking.upvotes,
+        'downvotes': elo_ranking.downvotes
     })
 
 if __name__ == '__main__':

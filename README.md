@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>1v1 Image Ranker</h1>
+  <h1>Pairwise Image Ranker</h1>
   <p>
     <a href="https://github.com/QuentinWach/1v1-image-ranker/blob/main/LICENSE">
       <img src="https://img.shields.io/github/license/QuentinWach/1v1-image-ranker" alt="License">
@@ -69,3 +69,8 @@ The ELO algorithm, implemented in `elo.py`, is used to rank images based on pair
 
 This implementation ensures that images consistently chosen as better will rise in the rankings, while those consistently chosen as worse will fall. The system is self-correcting and allows for dynamic changes in rankings as more comparisons are made.
 
+---
+## Advanced Techniques
+- **Rank Matrix Factorisation (RMF)**: This is a more sophisticated approach to analyze and decompose rank matrices. RMF aims to find underlying patterns in ranking data, providing insights into the rankings that form the basis of the data.
+- **Nuclear Norm Minimization**: This technique is used for rank aggregation, especially when dealing with incomplete or noisy data. It involves finding a low-rank approximation of the pairwise comparison matrix.
+- **Hodge Decomposition**: This is an algorithm used for global ranking based on pairwise comparisons. It can be enhanced with matrix completion techniques to improve results when there are limited pairwise comparisons available.
