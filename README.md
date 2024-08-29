@@ -16,10 +16,10 @@
 ![alt text](static/header.png)
 
 ## Basic Features
-- **TrueSkill ELO Algorithm** - An advanced algorithm that takes into account the uncertainty in the ratings and updates the ranks **globally** after each comparison since if A > B and B > C then we can infer that A > C. This achieves accurate results much faster than a typical ELO algorithm.
-- **Beautiful Web GUI**
-- **Import Images from Local Folder**
-- **Export Ranking Data as .CSV**
+- **TrueSkill ELO algorithm** - An advanced algorithm that takes into account the uncertainty in the ratings and updates the ranks **globally** after each comparison since if A > B and B > C then we can infer that A > C. This achieves accurate results much faster than a typical ELO algorithm.
+- **Beautiful web GUI**
+- **Select images from a local directory without needing to upload them**
+- **Export ranking data as .csv**
 
 ## Installation & Usage
 1. Clone the repository:
@@ -42,7 +42,7 @@
 ---
 ## TrueSkill ELO: How Does It Work?
 Each image is represented by two values:
-- μ (mu): The estimated skill level.
+- μ (mu): The estimated "skill" level.
 - σ (sigma): The uncertainty in that estimate.
 
 New items start with a default μ (often 25) and high σ (often 8.33). When two items are compared, their μ and σ values are used to calculate the expected outcome. The actual outcome is compared to this expectation. The winner's μ increases, the loser's decreases.Both items' σ typically decreases (representing increased certainty). The magnitude of changes depends on:
