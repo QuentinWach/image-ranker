@@ -34,20 +34,28 @@
    ```
 3. Install the required dependencies:
    ```
-   pip install flask
+   pip install flask trueskill
    ```
-4. Set up the project structure:
-   ```
-   mkdir -p static/images
-   mkdir templates
-   ```
-5. Place your images in subdirectories within the `static/images/` folder.
-6. Run the Flask app: `python app.py`.
-7. Open a web browser and navigate to `http://localhost:5000`.
+4. Run the Flask app: `python app.py`.
+5. Open a web browser and navigate to `http://localhost:5000`.
 
 ---
+## TrueSkill ELO: How Does It Work?
+Each image is represented by two values:
+- μ (mu): The estimated skill level.
+- σ (sigma): The uncertainty in that estimate.
+
+New items start with a default μ (often 25) and high σ (often 8.33). When two items are compared, their μ and σ values are used to calculate the expected outcome. The actual outcome is compared to this expectation. The winner's μ increases, the loser's decreases.Both items' σ typically decreases (representing increased certainty). The magnitude of changes depends on:
+- How surprising the outcome was (based on current ratings).
+- The current uncertainty (σ) of each item.
+
+It uses Gaussian distributions to model skill levels and employs factor graphs and message passing for efficient updates. Items are typically ranked by their μ - 3σ (a conservative estimate).
+
+Thus, overall, this system allows for efficient ranking with incomplete comparison data, making it well-suited for large sets of items where exhaustive pairwise comparisons are impractical!
+
+<!--
 ## ELO: How Does It Work?
-The ELO algorithm, implemented in `elo.py`, is used to rank images based on pairwise comparisons. Here's how it works:
+The typical ELO algorithm can be used to rank images based on pairwise comparisons. Here's how it works:
 
 1. **Initialization**: 
    - Each image starts with an initial rating (default: 1400).
@@ -75,3 +83,6 @@ The ELO algorithm, implemented in `elo.py`, is used to rank images based on pair
 
 This implementation ensures that images consistently chosen as better will rise in the rankings, while those consistently chosen as worse will fall. The system is self-correcting and allows for dynamic changes in rankings as more comparisons are made.
 
+
+
+-->
