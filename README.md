@@ -1,7 +1,7 @@
 <div align="center">
   <h1>Image Ranker</h1>
   <p>
-    <a href="https://github.com/QuentinWach/1v1-image-ranker/blob/main/LICENSE">
+    <a href="https://opensource.org/licenses/MIT">
       <img src="https://img.shields.io/github/license/QuentinWach/1v1-image-ranker" alt="License">
     </a>
     <a href="https://github.com/QuentinWach/1v1-image-ranker/stargazers">
@@ -24,8 +24,8 @@
 ## Installation & Usage
 1. Clone the repository:
    ```
-   git clone https://github.com/QuentinWach/1v1-image-ranker.git
-   cd 1v1-image-ranker
+   git clone https://github.com/QuentinWach/image-ranker.git
+   cd image-ranker
    ```
 2. Create a virtual environment (optional but recommended):
    ```
