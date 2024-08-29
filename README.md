@@ -13,7 +13,7 @@
   </p>
 </div>
 
-![alt text](image.png)
+![alt text](static/header.png)
 
 ## Installation & Usage
 1. Clone the repository:
