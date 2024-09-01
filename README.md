@@ -15,13 +15,21 @@
 
 ![alt text](static/header.png)
 
-## Basic Features
-- **TrueSkill ELO algorithm** - An advanced algorithm that takes into account the uncertainty in the ratings and updates the ranks **globally** after each comparison since if A > B and B > C then we can infer that A > C. This achieves accurate results much faster than a typical ELO algorithm.
-- **Web GUI for easy use**
-- **Select images from a local directory without needing to upload them**
-- **Export ranking data as .csv**
+## Core Features
+- **TrueSkill ELO algorithm.** An advanced algorithm that takes into account the uncertainty in the ratings and updates the ranks **globally** after each comparison since if A > B and B > C then we can infer that A > C. This achieves accurate results much faster than a typical ELO algorithm.
+- **Web GUI for easy use.**
+- **Select images from a local directory without needing to upload or move them.**
+- **Export ranking data as .csv.**
 
-## Installation & Usage
+<!--
+## Additional Features
+- **Eliminate images from the ranking process for even faster results.**
+
+
+- **Import corresponding text-prompts for each image.**
+- **Change the ELO algorithm's parameters.**
+-->
+## 🚀 Installation & Usage
 1. Clone the repository:
    ```
    git clone https://github.com/QuentinWach/image-ranker.git
@@ -58,8 +66,13 @@ Thus, overall, this system allows for efficient ranking with incomplete comparis
 ## Why? Reinforcement Learning with Human Feedback (RLHF)
 Post-training foundation models is what makes them actually useful. For example, large language models may not even chat with you without post-training. The same is true for images. In order to do so, a common technique is RLHF, which uses a reward model to reward or punish the output of the generative foundation model based on user preferences. In order to create this reward model, we need to know the user preferences which requires a dataset, here images. So whether it is to make some radical changes to an already existing model like Stable Diffusion or Flux, or to train your own model, it is important to be able to rank the images somehow to know which images are better. This is where this app comes in.
 
-## What Next?
-Once you have a dataset of images, you can use this app to rank them. You can then use the ranked dataset to train your reward model. Which you can then use to fine-tune your generative model.
+## What's Next?
+Once you have a dataset of images, you can use this app to rank them. You can then use the ranked dataset to train your reward model. Which you can then use to fine-tune your generative model. You might want to look into the following:
++ [Transformer Reinforcement Learning (TRL) (huggingface.co)](https://huggingface.co/docs/trl/main/en/index): TRL is a library for training language models using reinforcement learning techniques. It provides tools and utilities to implement RLHF and other RL algorithms for fine-tuning language models based on human preferences or other reward signals.
++ [PEFT (Parameter-Efficient Fine-Tuning) (huggingface.co)](https://huggingface.co/blog/trl-peft): PEFT is a technique to fine-tune language models using only a small subset of the model's parameters, making it much more efficient than full-parameter fine-tuning.
++ [Reward Model Training (medium.com)](https://medium.com/towards-generative-ai/reward-model-training-2209d1befb5f): This article provides a comprehensive guide to training a reward model for language models.
++ [RLHF for LLMs (superannotate.com)](https://www.superannotate.com/blog/rlhf-for-llm)
++ [RLHF (labellerr.com)](https://www.labellerr.com/blog/reinforcement-learning-from-human-feedback/)
 
 
 

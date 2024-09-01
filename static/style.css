@@ -174,6 +174,15 @@ button:active {
     font-weight: bold;
 }
 
+.right-buttons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
 .select-directory-btn {
     position: fixed;
     top: 20px;
@@ -201,9 +210,6 @@ button:active {
 }
 
 .export-rankings-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
     width: 220px;
     padding: 10px 15px;
     font-size: 14px;
@@ -216,6 +222,7 @@ button:active {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 10px;
 }
 
 .export-rankings-btn:hover .material-icons {
@@ -228,6 +235,41 @@ button:active {
 }
 
 .export-rankings-btn:active {
+    transform: scale(0.98);
+}
+
+.social-buttons {
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.social-button {
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 2px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.1s, transform 0.05s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.social-button:hover {
+    background-color: #000000;
+    color: white;
+    transform: scale(1.02);
+}
+
+.social-button:hover .material-icons {
+    color: white;
+}
+
+.social-button:active {
     transform: scale(0.98);
 }
 

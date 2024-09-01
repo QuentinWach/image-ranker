@@ -39,11 +39,25 @@
             <span class="material-icons">upload</span>
             Select Local Directory
         </button>
-        <button id="exportRankingsBtn" class="export-rankings-btn">
-            <span class="material-icons">save</span>
-            Export Rankings
-        </button>
+        <div class="right-buttons">
+            <button id="exportRankingsBtn" class="export-rankings-btn">
+                <span class="material-icons">save</span>
+                Export Rankings
+            </button>
+            <div class="social-buttons">
+                <a href="https://github.com/QuentinWach/image-ranker" target="_blank" rel="noopener noreferrer" class="social-button github-button">
+                    <span class="material-icons">star</span>
+                    Star on GitHub
+                </a>
+                <a href="https://twitter.com/intent/tweet?text=Check%20out%20this%20awesome%20Image%20Ranker%20project!%20https://github.com/QuentinWach/image-ranker" target="_blank" rel="noopener noreferrer" class="social-button twitter-button">
+                    <span class="material-icons">share</span>
+                    Share on X
+                </a>
+            </div>
+        </div>
     </div>
+
+
 
     <footer class="footer">
         <div class="footer-content">
@@ -65,12 +79,18 @@
                         alert(data.error);
                         return;
                     }
+                    console.log('Received image data:', data);
                     currentImages = data;
                     document.getElementById('image1').src = data.image1;
                     document.getElementById('image2').src = data.image2;
+                    console.log('Image1 src:', data.image1);
+                    console.log('Image2 src:', data.image2);
                     document.getElementById('image1-name').textContent = `Image A: ${decodeURIComponent(data.image1.split('=').pop().split('/').pop())}`;
                     document.getElementById('image2-name').textContent = `Image B: ${decodeURIComponent(data.image2.split('=').pop().split('/').pop())}`;
                     updateProgress(data.progress);
+                })
+                .catch(error => {
+                    console.error('Error loading images:', error);
                 });
         }
 
