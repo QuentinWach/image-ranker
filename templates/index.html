@@ -27,8 +27,8 @@
                 <span id="image2-name"></span>
             </div>
             <div class="buttons">
-                <button onclick="selectWinner('image1')">Image A is better</button>
-                <button onclick="selectWinner('image2')">Image B is better</button>
+                <button id="image1-btn" onclick="selectWinner('image1')">Image A is better <span class="shortcut">(Press 1 or left arrow)</span></button>
+                <button id="image2-btn" onclick="selectWinner('image2')">Image B is better <span class="shortcut">(Press 2 or right arrow)</span></button>
             </div>
         </div>
         <div class="rankings">
@@ -61,7 +61,7 @@
 
     <footer class="footer">
         <div class="footer-content">
-            <p>Made during a sleepless night by <a href="https://github.com/QuentinWach" target="_blank" rel="noopener noreferrer">Quentin Wach</a></p>
+            <p>Made during a sleepless night by <a href="https://github.com/QuentinWach" target="_blank" rel="noopener noreferrer">Quentin Wach</a>.</p>
             <p>This app is designed to help you make aesthetic choices and general decisions.</p>
             <p>But it is especially useful for generating data for deep learning models, such as fine-tuning tasks.</p>
         </div>
@@ -211,6 +211,24 @@
             clickSound.currentTime = 0;
             clickSound.play();
         }
+
+        function animateButton(buttonId) {
+            const button = document.getElementById(buttonId);
+            button.classList.add('pressed');
+            setTimeout(() => {
+                button.classList.remove('pressed');
+            }, 100);
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === '1' || event.key === 'ArrowLeft') {
+                selectWinner('image1');
+                animateButton('image1-btn');
+            } else if (event.key === '2' || event.key === 'ArrowRight') {
+                selectWinner('image2');
+                animateButton('image2-btn');
+            }
+        });
     </script>
 </body>
 </html>
