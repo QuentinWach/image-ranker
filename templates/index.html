@@ -14,8 +14,9 @@
     <title>Image ELO Ranker - Make Better Decisions</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR-AD-CLIENT-ID" crossorigin="anonymous"></script>
-</head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8803344579810006"
+        crossorigin="anonymous"></script>
+    </head>
 <body>
     <div class="container">
         <audio id="clickSound" src="{{ url_for('static', filename='click.mp3') }}" preload="auto"></audio>
@@ -52,7 +53,6 @@
             </button>
         </div>
     </div>
-
 
 
     <footer class="footer">
@@ -142,38 +142,45 @@
                         rankingsList.appendChild(li);
 
                         // Add Google Ad after every 10th image
-                        if ((index + 1) % 10 === 0) {
+                        if ((index + 1) % 10 === 0 && index !== data.length - 1) {
                             const adLi = document.createElement('li');
                             adLi.className = 'ad-container';
                             adLi.innerHTML = `
                                 <ins class="adsbygoogle"
-                                     style="display:block"
-                                     data-ad-client="YOUR-AD-CLIENT-ID"
-                                     data-ad-slot="YOUR-AD-SLOT-ID"
-                                     data-ad-format="auto"
-                                     data-full-width-responsive="true"></ins>
+                                    style="display:block"
+                                    data-ad-format="fluid"
+                                    data-ad-layout-key="-6t+ed+2i-1n-4w"
+                                    data-ad-client="ca-pub-8803344579810006"
+                                    data-ad-slot="4041607466"></ins>
                             `;
                             rankingsList.appendChild(adLi);
 
                             // Push the ad to Google
-                            (adsbygoogle = window.adsbygoogle || []).push({});
+                            if (typeof adsbygoogle !== 'undefined' && adsbygoogle.loaded === false) {
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            }
                         }
+                    });
 
-                        // Add event listeners for hover effect
-                        document.querySelectorAll('.image-container').forEach(container => {
-                            const img = container.querySelector('.ranking-image');
-                            const hoverDiv = container.querySelector('.image-hover');
+                    // Add event listeners for hover effect
+                    document.querySelectorAll('.image-container').forEach(container => {
+                        const img = container.querySelector('.ranking-image');
+                        const hoverDiv = container.querySelector('.image-hover');
 
-                            img.addEventListener('mouseenter', () => {
-                                hoverDiv.style.backgroundImage = `url(${img.src})`;
-                                hoverDiv.style.display = 'block';
-                            });
+                        img.addEventListener('mouseenter', () => {
+                            hoverDiv.style.backgroundImage = `url(${img.src})`;
+                            hoverDiv.style.display = 'block';
+                        });
 
-                            img.addEventListener('mouseleave', () => {
-                                hoverDiv.style.display = 'none';
-                            });
+                        img.addEventListener('mouseleave', () => {
+                            hoverDiv.style.display = 'none';
                         });
                     });
+
+                    // Ensure ads are loaded after the DOM is updated
+                    setTimeout(() => {
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    }, 100);
                 });
         }
 

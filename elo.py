@@ -1,7 +1,7 @@
 from trueskill import Rating, rate_1vs1
 
 class TrueSkillRanking:
-    def __init__(self, mu=25.0, sigma=8.33):
+    def __init__(self, mu=0.0, sigma=8.33):
         self.mu = mu
         self.sigma = sigma
         self.ratings = {}

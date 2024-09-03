@@ -432,7 +432,8 @@ button.pressed {
 }
 
 .ad-container {
-    margin: 20px 0;
     text-align: center;
     list-style-type: none;
+    height: 320px; /* Set a fixed height */
+    overflow: hidden; /* Hide overflow content */
 }
