@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Image Ranker: A tool for making aesthetic choices, general decisions, and generating training data for deep learning models.">
-    <meta name="keywords" content="image ranking, ELO system, aesthetic choices, decision making, deep learning, training data">
+    <meta name="description" content="Image ELO Ranker: An open-source tool for efficient image ranking, aesthetic choices, and generating training data for deep learning models.">
+    <meta name="keywords" content="image ranking, ELO system, open-source, decision making, deep learning, training data">
     <meta name="author" content="Quentin Wach">
+    <meta property="og:title" content="Image ELO Ranker - Make Better Decisions">
+    <meta property="og:description" content="Efficiently rank images, make aesthetic choices, and generate training data for deep learning models with this open-source tool.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-website-url.com">
+    <meta property="og:image" content="https://your-website-url.com/path-to-your-logo.png">
     <title>Image ELO Ranker - Make Better Decisions</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR-AD-CLIENT-ID" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
@@ -44,7 +50,16 @@
                 <span class="material-icons">save</span>
                 Export Rankings
             </button>
-            <div class="social-buttons">
+        </div>
+    </div>
+
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p><b>Image Ranker</b> - The open-source project for precise and efficient image ranking, made for generating training data for deep learning models using reinforcement learning with human feedback. But honestly, it's nice for picking your favourite movie, too.</p>
+            <p>Made by <a href="https://x.com/QuentinWach" target="_blank" rel="noopener noreferrer">Quentin Wach</a>.</p>
+            <div class="footer-buttons">
                 <a href="https://github.com/QuentinWach/image-ranker" target="_blank" rel="noopener noreferrer" class="social-button github-button">
                     <span class="material-icons">star</span>
                     Star on GitHub
@@ -54,16 +69,6 @@
                     Share on X
                 </a>
             </div>
-        </div>
-    </div>
-
-
-
-    <footer class="footer">
-        <div class="footer-content">
-            <p>Made during a sleepless night by <a href="https://github.com/QuentinWach" target="_blank" rel="noopener noreferrer">Quentin Wach</a>.</p>
-            <p>This app is designed to help you make aesthetic choices and general decisions.</p>
-            <p>But it is especially useful for generating data for deep learning models, such as fine-tuning tasks.</p>
         </div>
     </footer>
 
@@ -122,9 +127,12 @@
                         const li = document.createElement('li');
                         li.innerHTML = `
                             <span class="rank">#${index + 1}</span>
-                            <img src="${item.image}" alt="Ranked image">
+                            <div class="image-container">
+                                <img src="${item.image}" alt="Ranked image" class="ranking-image">
+                                <div class="image-hover"></div>
+                            </div>
                             <span class="image-name">${item.image.split('/').pop()}</span>
-                            <span class="elo">ELO: ${Math.round(item.elo)}</span>
+                            <span class="elo"><i class="material-icons">star</i><span class="elo-value">${Math.round(item.elo)}</span></span>
                             <span class="uncertainty">± ${Math.round(item.uncertainty)}</span>
                             <span class="votes">
                                 <span class="up-arrow"><i class="material-icons">arrow_upward</i>${item.upvotes}</span>
@@ -132,6 +140,39 @@
                             </span>
                         `;
                         rankingsList.appendChild(li);
+
+                        // Add Google Ad after every 10th image
+                        if ((index + 1) % 10 === 0) {
+                            const adLi = document.createElement('li');
+                            adLi.className = 'ad-container';
+                            adLi.innerHTML = `
+                                <ins class="adsbygoogle"
+                                     style="display:block"
+                                     data-ad-client="YOUR-AD-CLIENT-ID"
+                                     data-ad-slot="YOUR-AD-SLOT-ID"
+                                     data-ad-format="auto"
+                                     data-full-width-responsive="true"></ins>
+                            `;
+                            rankingsList.appendChild(adLi);
+
+                            // Push the ad to Google
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        }
+
+                        // Add event listeners for hover effect
+                        document.querySelectorAll('.image-container').forEach(container => {
+                            const img = container.querySelector('.ranking-image');
+                            const hoverDiv = container.querySelector('.image-hover');
+
+                            img.addEventListener('mouseenter', () => {
+                                hoverDiv.style.backgroundImage = `url(${img.src})`;
+                                hoverDiv.style.display = 'block';
+                            });
+
+                            img.addEventListener('mouseleave', () => {
+                                hoverDiv.style.display = 'none';
+                            });
+                        });
                     });
                 });
         }

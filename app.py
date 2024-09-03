@@ -20,7 +20,7 @@ def get_image_paths():
     image_paths = []
     for root, dirs, files in os.walk(IMAGE_FOLDER):
         for file in files:
-            if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
+            if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.webp')):
                 image_paths.append(os.path.join(root, file))
     return image_paths
 
@@ -60,7 +60,12 @@ def serve_image():
     image_path = request.args.get('path')
     if image_path.startswith('/serve_image'):
         image_path = image_path.split('=', 1)[1]
-    return send_file(image_path, mimetype='image/jpeg')
+    file_extension = os.path.splitext(image_path)[1].lower()
+    if file_extension == '.webp':
+        mimetype = 'image/webp'
+    else:
+        mimetype = 'image/jpeg'
+    return send_file(image_path, mimetype=mimetype)
 
 @app.route('/update_elo', methods=['POST'])
 def update_elo():

@@ -99,7 +99,7 @@ button:active {
     background-color: #f7f7f7;
     border: 0px solid #000000;
     border-radius: 5px;
-    padding: 5px 10px;
+    padding: 5px 30px 5px 30px;
     justify-content: space-between;
 }
 
@@ -109,6 +109,31 @@ button:active {
     object-fit: cover;
     margin-right: 10px;
     border-radius: 5px;
+}
+
+#rankingsList img:hover::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    z-index: 1000;
+    height: calc(100% - 40px);
+    width: 100%;
+    background-image: inherit;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
+}
+
+#rankingsList img {
+    transition: all 0.3s ease-in-out;
+}
+
+#rankingsList img:hover {
+    z-index: 1001;
 }
 
 .rank {
@@ -125,11 +150,20 @@ button:active {
     text-overflow: ellipsis;
 }
 
+.elo-uncertainty-container {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
+
 .elo {
-    margin-right: 3px;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
 }
 
 .uncertainty {
+    display: flex;
     margin-right: 30px;
 }
 
@@ -153,12 +187,13 @@ button:active {
 }
 
 .progress-bar {
-    width: 100%;
+    width: calc(100% - 480px); /* Adjust width to avoid overlapping with buttons */
     height: 10px;
     background-color: #f0f0f0;
     border-radius: 10px;
-    margin-bottom: 10px;
+    margin: 0 auto 10px; /* Center the progress bar */
     overflow: hidden;
+    left: 120px; /* Offset to align with main content */
 }
 
 #progress-fill {
@@ -173,6 +208,20 @@ button:active {
     margin-bottom: 20px;
     font-weight: bold;
 }
+
+@media (max-width: 768px) {
+    #progress-text {
+        visibility: hidden;
+        height: 0;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .image-comparison {
+        margin-top: 38px; /* Adjust this value as needed */
+    }
+}
+
 
 .right-buttons {
     position: fixed;
@@ -203,6 +252,7 @@ button:active {
 
 .select-directory-btn:hover .material-icons {
     color: white;
+    border: 2px solid #000000;
 }
 
 .select-directory-btn:active {
@@ -243,7 +293,6 @@ button:active {
     align-items: flex-end;
     opacity: 0.3;
 }
-
 .social-button {
     padding: 10px 15px;
     font-size: 14px;
@@ -286,12 +335,17 @@ button:active {
     margin: 0 auto;
     text-align: center;
     color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .footer p {
-    margin-bottom: 0px;
+    margin-bottom: 20px;
+    width: 50%;
     line-height: 1.5;
     opacity: 0.5;
+    align-self: center;
 }
 
 .footer a {
@@ -301,28 +355,51 @@ button:active {
 }
 
 .footer a:hover {
-    color: #004080;
+    color: #000000;
     text-decoration: underline;
     text-shadow: 0 0 5px #000000;
 }
 
-.footer-links {
+.footer-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
     margin-top: 20px;
 }
 
-.footer-links a {
-    display: inline-block;
-    margin: 0 10px;
-    padding: 5px 10px;
-    border: 1px solid #0066cc;
+.footer-buttons .social-button {
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #00000000;
+    color: rgb(0, 0, 0);
+    border: 2px solid #000000;
     border-radius: 5px;
-    transition: all 0.3s ease;
+    cursor: pointer;
+    transition: background-color 0.1s, transform 0.05s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 
-.footer-links a:hover {
-    background-color: #0066cc;
+.footer-buttons .social-button:hover {
+    background-color: #000000;
     color: white;
+    transform: scale(1.02);
     text-decoration: none;
+}
+
+.footer-buttons .social-button:hover .material-icons {
+    color: white;
+}
+
+.footer-buttons .social-button:active {
+    transform: scale(0.98);
+}
+
+.footer-buttons .material-icons {
+    font-size: 18px;
+    margin-right: 5px;
 }
 
 @media (max-width: 768px) {
@@ -352,4 +429,10 @@ button.pressed {
 .shortcut {
     font-size: 12px;
     color: #666666;
+}
+
+.ad-container {
+    margin: 20px 0;
+    text-align: center;
+    list-style-type: none;
 }
