@@ -1,0 +1,8 @@
+- Eliminate images from the ranking process for even faster results when down-voted.
+- Import corresponding text-prompts for each image.
+- Option to delete images in the ranking list entirely.
+- Best of four ranking.
+- Undo button.
+- Pre-rank based on image quality.
+- Import ranking data to resume ranking process.
+- Possibly replace the Python with Javascript so as much as possible can run directly in the browser.

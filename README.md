@@ -21,14 +21,6 @@
 - **Select images from a local directory without needing to upload or move them.**
 - **Export ranking data as .csv.**
 
-<!--
-## Additional Features
-- **Eliminate images from the ranking process for even faster results.**
-
-
-- **Import corresponding text-prompts for each image.**
-- **Change the ELO algorithm's parameters.**
--->
 ## 🚀 Installation & Usage
 1. Clone the repository:
    ```
@@ -53,7 +45,7 @@ Each image is represented by two values:
 - μ (mu): The estimated "skill" level.
 - σ (sigma): The uncertainty in that estimate.
 
-New items start with a default μ (often 25) and high σ (often 8.33). When two items are compared, their μ and σ values are used to calculate the expected outcome. The actual outcome is compared to this expectation. The winner's μ increases, the loser's decreases.Both items' σ typically decreases (representing increased certainty). The magnitude of changes depends on:
+New items start with a default μ (often 25 but 0 here) and high σ (often 8.33). When two items are compared, their μ and σ values are used to calculate the expected outcome. The actual outcome is compared to this expectation. The winner's μ increases, the loser's decreases.Both items' σ typically decreases (representing increased certainty). The magnitude of changes depends on:
 - How surprising the outcome was (based on current ratings).
 - The current uncertainty (σ) of each item.
 
@@ -64,8 +56,8 @@ Importantly, the algorithm updates all previously ranked items simultaneously wi
 Thus, overall, this system allows for efficient ranking with incomplete comparison data, making it well-suited for large sets of items where exhaustive pairwise comparisons are impractical!
 
 ## Why? Reinforcement Learning with Human Feedback (RLHF)
-Post-training foundation models is what makes them actually useful. For example, large language models may not even chat with you without post-training. The same is true for images. In order to do so, a common technique is RLHF, which uses a reward model to reward or punish the output of the generative foundation model based on user preferences. In order to create this reward model, we need to know the user preferences which requires a dataset, here images. So whether it is to make some radical changes to an already existing model like Stable Diffusion or Flux, or to train your own model, it is important to be able to rank the images somehow to know which images are better. This is where this app comes in.
-
+Post-training foundation models is what makes them actually useful. For example, large language models may not even chat with you without post-training. The same is true for images. In order to do so, a common technique is [RLHF](https://huggingface.co/docs/trl/main/en/index), which uses a reward model to reward or punish the output of the generative foundation model based on user preferences. In order to create this reward model, we need to know the user preferences which requires a dataset, here images. So whether it is to make some radical changes to an already existing model like Stable Diffusion or Flux, or to train your own model, it is important to be able to rank the images somehow to know which images are better. This is where this app comes in.
+<!--
 ## What's Next?
 Once you have a dataset of images, you can use this app to rank them. You can then use the ranked dataset to train your reward model. Which you can then use to fine-tune your generative model. You might want to look into the following:
 + [Transformer Reinforcement Learning (TRL) (huggingface.co)](https://huggingface.co/docs/trl/main/en/index): TRL is a library for training language models using reinforcement learning techniques. It provides tools and utilities to implement RLHF and other RL algorithms for fine-tuning language models based on human preferences or other reward signals.
@@ -73,37 +65,12 @@ Once you have a dataset of images, you can use this app to rank them. You can th
 + [Reward Model Training (medium.com)](https://medium.com/towards-generative-ai/reward-model-training-2209d1befb5f): This article provides a comprehensive guide to training a reward model for language models.
 + [RLHF for LLMs (superannotate.com)](https://www.superannotate.com/blog/rlhf-for-llm)
 + [RLHF (labellerr.com)](https://www.labellerr.com/blog/reinforcement-learning-from-human-feedback/)
-
-
-
-<!--
-## ELO: How Does It Work?
-The typical ELO algorithm can be used to rank images based on pairwise comparisons. Here's how it works:
-
-1. **Initialization**: 
-   - Each image starts with an initial rating (default: 1400).
-   - A K-factor (default: 32) determines the maximum change in rating after each comparison.
-
-2. **Rating Calculation**:
-   - When two images are compared, their current ratings are used to calculate the expected outcome.
-   - The formula for expected score is: 1 / (1 + 10^((opponent_rating - player_rating) / 400))
-
-3. **Rating Update**:
-   - After each comparison, the ratings of both images are updated.
-   - The winner's rating increases, and the loser's rating decreases.
-   - The amount of change depends on the expected outcome and the actual outcome.
-   - New Rating = Old Rating + K * (Actual Outcome - Expected Outcome)
-     - Actual Outcome is 1 for the winner and 0 for the loser.
-
-4. **Tracking Statistics**:
-   - The system keeps track of the number of comparisons for each image.
-   - It also counts upvotes (wins) and downvotes (losses) for each image.
-   - Ensures that each image is compared against every other image exactly once which is necessary for the algorithm to converge. (Shown as a progress bar in the web app.)
-
-5. **Ranking**:
-   - Images are ranked based on their current ELO rating.
-   - The `get_rankings()` method returns a sorted list of images by their ratings.
-
-This implementation ensures that images consistently chosen as better will rise in the rankings, while those consistently chosen as worse will fall. The system is self-correcting and allows for dynamic changes in rankings as more comparisons are made.
-
 -->
+
+## About
+**Image Ranker** is part of a part of project to enable anyone to create their own _foundation_ models custom tailored to their specific needs. More on that soon.
+
+## Contributing
+If you have any questions, please open an issue on GitHub! And feel free to fork this project, to suggest or contribute new features. The `OPEN_TODO.md` file contains a list of features that are planned to be implemented. Help is very much appreciated! That said, the easiest way to support the project is to **give this repo a ⭐!**
+
+Thank you!
