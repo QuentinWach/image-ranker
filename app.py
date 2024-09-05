@@ -8,6 +8,7 @@ from tkinter import filedialog
 import csv
 from io import StringIO
 import logging
+import threading
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -15,43 +16,93 @@ app = Flask(__name__)
 elo_ranking = TrueSkillRanking()
 
 IMAGE_FOLDER = 'static/images'
+image_pairs_lock = threading.Lock()
 
 def get_image_paths():
     image_paths = []
     for root, dirs, files in os.walk(IMAGE_FOLDER):
         for file in files:
             if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.webp', '.jfif', '.avif', '.heic', '.heif')):
-                image_paths.append(os.path.join(root, file))
+                image_paths.append(os.path.join(root, file).replace('\\', '/'))
+    random.shuffle(image_paths) # shuffle here so that pairs aren't just images next to eachother (doesn't matter if you finish comparing all but nice to have otherwise)
     return image_paths
 
 image_pairs = []
 current_pair_index = 0
 
-def initialize_image_pairs():
+def initialize_image_pairs(a=False):
     global image_pairs, current_pair_index
-    image_paths = get_image_paths()
-    image_pairs = list(itertools.combinations(image_paths, 2))
-    random.shuffle(image_pairs)
+    image_paths=get_image_paths()
+    n = len(image_paths)
+    # Create a list of pairs where each image appears at least once in the first n entries
+    initial_pairs = []
+    for i in range(n):
+        pair = (image_paths[i], image_paths[(i+1) % n])
+        initial_pairs.append(pair)
+    random.shuffle(initial_pairs)
+    # Generate the remaining pairs
+    remaining_pairs = list(itertools.combinations(image_paths, 2))
+    remaining_pairs = [pair for pair in remaining_pairs if pair not in initial_pairs]
+    image_pairs = initial_pairs + remaining_pairs
+    random.shuffle(image_pairs[n:])
     current_pair_index = 0
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+def smart_shuffle():
+    """
+    Reorders the image pairs based on their ELO ratings and comparison counts.
+
+    This function removes the image pairs that have already been compared, 
+    retrieves the current ELO rankings and comparison counts, and then 
+    sorts the remaining image pairs based on their ELO differences and 
+    comparison counts. The image pairs with the smallest ELO differences 
+    and comparison counts are placed first in the list.
+
+    """
+    global image_pairs
+    global current_pair_index
+    
+    with image_pairs_lock:
+        image_pairs = image_pairs[current_pair_index:]
+        current_pair_index = 0
+        rankings = elo_ranking.get_rankings()
+        elo_dict = {image: rating.mu for image, rating in rankings}
+        count_dict = {image: elo_ranking.counts.get(image, 0) for image in elo_dict}
+        
+        def get_elo_difference(pair):
+            return abs(elo_dict.get(pair[0], 0) - elo_dict.get(pair[1], 0)) + 0.8 * (count_dict.get(pair[0], 0) + count_dict.get(pair[1], 0))
+        
+        image_pairs.sort(key=get_elo_difference)
+        
+@app.route('/smart_shuffle')
+def smart_shuffle_route():
+    try:
+        smart_shuffle()
+        return jsonify({'success': True})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
 @app.route('/get_images')
 def get_images():
     global current_pair_index
-    if current_pair_index >= len(image_pairs):
-        return jsonify({'error': 'All comparisons completed'})
-    
-    img1, img2 = image_pairs[current_pair_index]
-    current_pair_index += 1
+
+    with image_pairs_lock:
+        if current_pair_index >= len(image_pairs):
+            return jsonify({'error': 'All comparisons completed in get_images'})
+        
+        img1, img2 = image_pairs[current_pair_index]
+        current_pair_index += 1
+        total_pairs = len(image_pairs)
+        completed_pairs = len(elo_ranking.comparison_history)
     return jsonify({
-        'image1': '/serve_image?path=' + img1.replace('\\', '/'),
-        'image2': '/serve_image?path=' + img2.replace('\\', '/'),
+        'image1':  img1,
+        'image2':  img2,
         'progress': {
-            'current': current_pair_index,
-            'total': len(image_pairs)
+            'current': completed_pairs,
+            'total': total_pairs
         }
     })
 
@@ -67,12 +118,21 @@ def serve_image():
         mimetype = 'image/jpeg'
     return send_file(image_path, mimetype=mimetype)
 
+
 @app.route('/update_elo', methods=['POST'])
 def update_elo():
     data = request.json
     winner = data['winner']
     loser = data['loser']
-    elo_ranking.update_rating(winner, loser)
+    elo_ranking.update_rating((winner, loser))
+    return jsonify({'success': True})
+
+@app.route('/remove_image', methods=['POST'])
+def remove_image():
+    image = request.json['del_img']
+    global image_pairs
+    image_pairs = [(img1, img2) for img1, img2 in image_pairs if img1!= image and img2!= image]
+    elo_ranking.remove_image(image)
     return jsonify({'success': True})
 
 @app.route('/get_rankings')
@@ -106,6 +166,7 @@ def select_directory():
     try:
         root = tk.Tk()
         root.withdraw()
+        root.attributes('-topmost', True)
         directory = filedialog.askdirectory(master=root)
         root.destroy()
         if directory:
@@ -135,7 +196,7 @@ def export_rankings():
         writer.writerow(['Image', 'ELO', 'Uncertainty', 'Upvotes', 'Downvotes'])
         for image, rating in rankings:
             writer.writerow([
-                os.path.basename(image),
+                image,
                 round(rating.mu, 2),
                 round(rating.sigma, 2),
                 elo_ranking.upvotes.get(image, 0),
@@ -152,6 +213,72 @@ def export_rankings():
     except Exception as e:
         app.logger.error(f"Error in export_rankings: {str(e)}")
         return jsonify({'error': str(e)}), 500
+
+@app.route('/export_comparisons')
+def export_comparisons():
+    app.logger.info("Export comparisons route called")
+    try:
+        comparisons = elo_ranking.comparison_history
+        app.logger.info(f"Comparisons: {comparisons}")
+        if not comparisons:
+            app.logger.warning("No comparisons data available")
+            return jsonify({'error': 'No comparisons data available. Please make some comparisons first.'}), 400
+
+        output = StringIO()
+        writer = csv.writer(output)
+        writer.writerow(['Winner', 'Loser'])
+        for winner, loser in comparisons:
+            if winner is None:
+                writer.writerow(['None', loser])
+            else:
+                writer.writerow([winner, loser])
+        
+        output.seek(0)
+        app.logger.info("CSV data created successfully")
+        return Response(
+            output.getvalue(),
+            mimetype='text/csv',
+            headers={"Content-disposition": "attachment; filename=comparisons.csv"}
+        )
+    except Exception as e:
+        app.logger.error(f"Error in export_comparisons: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/import_comparison_history', methods=['POST'])
+def import_comparison_history():
+    global image_pairs
+    file = request.files['file']
+    append = request.form.get('append', 'false') == 'true'
+
+    reader = csv.reader(file.read().decode('utf-8').splitlines())
+    next(reader)  # Skip header row
+
+    if not append:
+        elo_ranking.comparison_history = []
+        elo_ranking.recalculate_rankings()
+
+    pairs_to_add = set()
+    losers_to_remove = set()
+    pairs_to_remove = set()
+    for row in reader:
+        winner, loser = row
+        if winner == 'None':  # Handle cases where winner is None
+            losers_to_remove.add(loser)
+        else:
+            pairs_to_add.add((winner, loser))
+        # Collect pairs to remove
+        pairs_to_remove.add((winner, loser))
+        pairs_to_remove.add((loser, winner))
+
+    # Remove losers from image_pairs and elo_ranking
+    image_pairs = [(img1, img2) for img1, img2 in image_pairs if img1 not in losers_to_remove and img2 not in losers_to_remove]
+    elo_ranking.update_rating(pairs_to_add)
+    elo_ranking.remove_image(losers_to_remove)
+    
+    # Remove duplicate pairs from image_pairs
+    image_pairs = [(img1, img2) for img1, img2 in image_pairs if (img1, img2) not in pairs_to_remove]
+
+    return jsonify({'success': True})
 
 @app.route('/test_csv')
 def test_csv():
