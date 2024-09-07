@@ -11,9 +11,18 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://your-website-url.com">
     <meta property="og:image" content="https://your-website-url.com/path-to-your-logo.png">
-    <title>Image ELO Ranker - Make Better Decisions</title>
+    <title>Image Ranker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        .material-symbols-rounded {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 300,
+        'GRAD' 0,
+        'opsz' 24
+        }
+    </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8803344579810006"
     crossorigin="anonymous"></script>
 </head>
@@ -38,10 +47,22 @@
                 <span id="image2-name"></span>
             </div>
             <div class="buttons">
-                <button id="image1-btn" onclick="selectWinner('image1')">Image A is better <span class="shortcut">(Press 1 or left arrow)</span></button>
-                <button id="image2-btn" onclick="selectWinner('image2')">Image B is better <span class="shortcut">(Press 2 or right arrow)</span></button>
-                <button id="remove-image1-btn" onclick="removeImage(currentImages['image1'])">Remove Image A</button>
-                <button id="remove-image2-btn" onclick="removeImage(currentImages['image2'])">Remove Image B</button>
+                <div class="button-group">
+                    <div class="action-buttons">
+                        <button id="image1-btn" onclick="selectWinner('image1')">Image A is better <span class="shortcut">(Press 1 or left arrow)</span></button>
+                        <button id="remove-image1-btn" onclick="removeImage(currentImages['image1'])" class="major-icon-btn" title="Remove Image A">
+                            <span class="material-symbols-rounded">delete</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <div class="action-buttons">
+                        <button id="image2-btn" onclick="selectWinner('image2')">Image B is better <span class="shortcut">(Press 2 or right arrow)</span></button>
+                        <button id="remove-image2-btn" onclick="removeImage(currentImages['image2'])" class="major-icon-btn" title="Remove Image B">
+                            <span class="material-symbols-rounded">delete</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -53,44 +74,41 @@
 
         <!-- LEFT -->
         <div class="left-buttons">
-            <button id="selectDirectoryBtn" class="select-directory-btn">
-                <span class="material-icons">upload</span>
-                Select Local Directory
-            </button>
-            <button id="import-comparison-history-btn" class="import-comparison-history-btn">
-                <span class="material-icons">history</span>
-                Import Comparisons
-            </button>
-            </br>
-            <p>Load comparisons from file to resume a previous ranking process.</p>
+            <div class="button-row">
+                <button id="selectDirectoryBtn" class="main-btn" title="Select a local directory to begin ranking images.">
+                    <span class="material-symbols-rounded">upload</span>
+                    Select Local Directory
+                </button>
+                <button id="import-comparison-history-btn" class="major-icon-btn" title="Import previous comparisons to continue a ranking session.">
+                    <span class="material-symbols-rounded">history</span>
+                </button>
+            </div>
         </div>
 
         <!-- RIGHT -->
         <div class="right-buttons">
-            <button id="export-comparisons-btn" class="export-comparisons-btn">
-                <span class="material-icons">save</span>
-                Export Comparisons
-            </button>
-            <button id="exportRankingsBtn" class="export-rankings-btn">
-                <span class="material-icons">save</span>
-                Export Rankings
-            </button>
-            <button id="smartShuffleBtn" class="smart-shuffle-btn">
-                <span class="material-icons">shuffle</span>
-                Smart Shuffle
-            </button>
-            <label class="auto-shuffle-label">
-                <input type="checkbox" id="autoShuffleToggle">
-                Auto Shuffle Every 3 Comparisons
-            </label>
+            <div class="button-row">
+                <button id="smartShuffleBtn" class="major-icon-btn" title="Smart shuffle: Randomly select the next pair of images from the top of the ranking.">
+                    <span class="material-symbols-rounded">shuffle</span>
+                </button>
+                <button id="auto-shuffle-btn" class="major-icon-btn" title="Auto-shuffle every three comparisons.">
+                    <span class="material-symbols-rounded">category</span>
+                </button>
+                <button id="export-comparisons-btn" class="major-icon-btn" title="Export the current comparison history to a CSV file.">
+                    <span class="material-symbols-rounded">download</span>
+                </button>
+                <button id="exportRankingsBtn" class="major-icon-btn" title="Export the current rankings to a CSV file.">
+                    <span class="material-symbols-rounded">save</span>
+                </button>
+            </div>
             <!--
             <div class="social-buttons">
                 <a href="https://github.com/QuentinWach/image-ranker" target="_blank" rel="noopener noreferrer" class="social-button github-button">
-                    <span class="material-icons">star</span>
+                    <span class="material-symbols-rounded">star</span>
                     Star on GitHub
                 </a>
                 <a href="https://twitter.com/intent/tweet?text=Check%20out%20this%20awesome%20Image%20Ranker%20project!%20https://github.com/QuentinWach/image-ranker" target="_blank" rel="noopener noreferrer" class="social-button twitter-button">
-                    <span class="material-icons">share</span>
+                    <span class="material-symbols-rounded">share</span>
                     Share on X
                 </a>
             </div>
@@ -117,10 +135,10 @@
                 <h3>Connect</h3>
                 <div class="social-icons">
                     <a href="https://github.com/QuentinWach/image-ranker" target="_blank" class="social-icon github">
-                        <span class="material-icons">code</span>
+                        <span class="material-symbols-rounded">code</span>
                     </a>
                     <a href="https://x.com/QuentinWach" target="_blank" class="social-icon twitter">
-                        <span class="material-icons">alternate_email</span>
+                        <span class="material-symbols-rounded">alternate_email</span>
                     </a>
                 </div>
             </div>
@@ -219,11 +237,11 @@
                                 <div class="image-hover"></div>
                             </div>
                             <span class="image-name">${item.image.split('/').pop()}</span>
-                            <span class="elo"><i class="material-icons">star</i><span class="elo-value">${Math.round(item.elo)}</span></span>
+                            <span class="elo"><i class="material-symbols-rounded">star</i><span class="elo-value">${Math.round(item.elo)}</span></span>
                             <span class="uncertainty">± ${Math.round(item.uncertainty)}</span>
                             <span class="votes">
-                                <span class="up-arrow"><i class="material-icons">arrow_upward</i>${item.upvotes}</span>
-                                <span class="down-arrow"><i class="material-icons">arrow_downward</i>${item.downvotes}</span>
+                                <span class="up-arrow"><i class="material-symbols-rounded">arrow_upward</i>${item.upvotes}</span>
+                                <span class="down-arrow"><i class="material-symbols-rounded">arrow_downward</i>${item.downvotes}</span>
                             </span>
             <span class="remove-image-btn" onclick="removeImage('${item.image}')">Remove Image</span>
                         `;
@@ -443,11 +461,11 @@
             });
         });
         
-        const autoShuffleToggle = document.getElementById('autoShuffleToggle');
+        const autoShuffleToggle = document.getElementById('auto-shuffle-btn');
         let comparisonCount = 0;
         
         async function checkAutoShuffle() {
-            if (autoShuffleToggle.checked) {
+            if (autoShuffleToggle.classList.contains('active')) {
                 comparisonCount++;
                 if (comparisonCount >= 3) {
                     comparisonCount = 0;
@@ -467,6 +485,9 @@
             }
         }
         
+        autoShuffleToggle.addEventListener('click', function() {
+            autoShuffleToggle.classList.toggle('active');
+        });
     </script>
 </body>
 </html>
