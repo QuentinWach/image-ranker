@@ -1,6 +1,11 @@
 - Eliminate images from the ranking process for even faster results when down-voted.
+- Regularly save the ranking file in case there is some error.
 - Import corresponding text-prompts for each image.
 - Option to delete images in the ranking list entirely.
+- Automatically annotate/describe/generate text prompts for the images using a (multi-modal) vision model.
+- Tools to scale and crop an image.
+- Tools to draw over labels/text on an image and autofill to delete it.
+- Allow to write/edit text-prompts for each image.
 - Best of four ranking.
 - Undo button.
 - Pre-rank based on image quality.
