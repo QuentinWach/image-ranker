@@ -550,9 +550,9 @@ button:active {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 2px solid #000;
+    border: 0px solid #000;
     background-color: #ffffff;
-    opacity: 100%;
+    opacity: 80%;
     color: #000000;
     text-decoration: none;
     transition: background-color 0.3s ease;
