@@ -1,3 +1,4 @@
+/* ============================ BASIC STYLES ============================ */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -7,29 +8,32 @@ body {
 h2 {
     text-align: center;
 }
-
 p {
     margin: 0;
     padding: 0;
-
+}
+.material-icons {
+    font-size: 18px;
+    margin-right: 2px;
+    color: #000000;
 }
 
+/* ============================ MAIN CONTAINER: Includes the image comparison, progress bar, and the ranking list ============================ */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
+/* IMAGE COMPARISON STYLES */
 .image-comparison {
     margin-bottom: 40px;
 }
-
 .images {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
 }
-
 .images img {
     width: 48%;
     height: auto;
@@ -37,13 +41,11 @@ p {
     border-radius: 0px;
     object-fit: contain;
 }
-
 .image-names {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 }
-
 .image-names span {
     width: 48%;
     text-align: center;
@@ -53,12 +55,12 @@ p {
     border-radius: 15px;
 }
 
+/* ============================ BUTTON STYLES ============================ */
 .buttons {
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
-
 button {
     padding: 12px 20px;
     font-size: 16px;
@@ -70,7 +72,6 @@ button {
     color: #000000;
     background-color: #ffffff;
 }
-
 button:hover {
     background-color: #000000;
     transform: scale(1.02);
@@ -78,151 +79,23 @@ button:hover {
     box-shadow: 0 3px 5px #00000086;
     color: white;
 }
-
 button:active {
     transform: scale(0.98);
 }
-
-.rankings {
-    margin-top: 40px;
+/* Comment inside buttons to explain their function */
+.shortcut {
+    font-size: 12px;
+    color: #666666;
 }
 
-#rankingsList {
-    list-style-type: none;
-    padding: 0;
-}
-
-#rankingsList li {
+/* Buttons on the left side of the screen */
+.left-buttons {
     display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-    background-color: #f7f7f7;
-    border: 0px solid #000000;
-    border-radius: 5px;
-    padding: 5px 30px 5px 30px;
-    justify-content: space-between;
-}
-
-#rankingsList img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    margin-right: 10px;
-    border-radius: 5px;
-}
-
-#rankingsList img:hover::after {
-    content: '';
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    z-index: 1000;
-    height: calc(100% - 40px);
-    width: 100%;
-    background-image: inherit;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    transition: all 0.3s ease-in-out;
-}
-
-#rankingsList img {
-    transition: all 0.3s ease-in-out;
-}
-
-#rankingsList img:hover {
-    z-index: 1001;
-}
-
-.rank {
-    font-weight: bold;
-    margin-right: 10px;
-    width: 40px;
-}
-
-.image-name {
-    flex-grow: 1;
-    margin-right: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.elo-uncertainty-container {
-    display: flex;
-    align-items: center;
-    margin-right: 30px;
-}
-
-.elo {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-}
-
-.uncertainty {
-    display: flex;
-    margin-right: 30px;
-}
-
-.votes {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-}
-
-.upvotes, .downvotes {
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-    font-size: 14px;
-}
-
-.material-icons {
-    font-size: 18px;
-    margin-right: 2px;
-    color: #000000;
-}
-
-.progress-bar {
-    width: calc(100% - 480px); /* Adjust width to avoid overlapping with buttons */
-    height: 10px;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    margin: 0 auto 10px; /* Center the progress bar */
-    overflow: hidden;
-    left: 120px; /* Offset to align with main content */
-}
-
-#progress-fill {
-    height: 100%;
-    background-color: #000000;
-    width: 0;
-    transition: width 0.5s ease-in-out;
-}
-
-#progress-text {
-    text-align: center;
+    justify-content: center;
+    gap: 10px;
     margin-bottom: 20px;
-    font-weight: bold;
 }
-
-@media (max-width: 768px) {
-    #progress-text {
-        visibility: hidden;
-        height: 0;
-        margin: 0;
-        padding: 0;
-    }
-    
-    .image-comparison {
-        margin-top: 38px; /* Adjust this value as needed */
-    }
-}
-
-
+/* BUttons for the right side of the screen */
 .right-buttons {
     position: fixed;
     top: 20px;
@@ -232,6 +105,8 @@ button:active {
     align-items: flex-end;
 }
 
+
+/* Left: Button to import files */
 .select-directory-btn {
     position: fixed;
     top: 20px;
@@ -249,15 +124,17 @@ button:active {
     align-items: center;
     justify-content: center;
 }
-
 .select-directory-btn:hover .material-icons {
     color: white;
     border: 2px solid #000000;
 }
-
 .select-directory-btn:active {
     transform: scale(0.98);
 }
+
+
+
+
 
 .export-rankings-btn {
     width: 220px;
@@ -274,19 +151,17 @@ button:active {
     justify-content: center;
     margin-bottom: 10px;
 }
-
 .export-rankings-btn:hover .material-icons {
     color: white;
 }
-
 .export-rankings-btn:hover {
     background-color: #000000;
     transform: scale(1.02);
 }
-
 .export-rankings-btn:active {
     transform: scale(0.98);
 }
+
 
 .social-buttons {
     flex-direction: column;
@@ -308,28 +183,165 @@ button:active {
     text-decoration: none;
     margin-bottom: 10px;
 }
-
 .social-button:hover {
     background-color: #000000;
     color: white;
     transform: scale(1.02);
 }
-
 .social-button:hover .material-icons {
     color: white;
 }
-
 .social-button:active {
     transform: scale(0.98);
 }
 
+
+
+
+
+
+
+
+
+
+/* ============================ RANKINGS LIST STYLES ============================ */
+.rankings {
+    margin-top: 40px;
+}
+#rankingsList {
+    list-style-type: none;
+    padding: 0;
+}
+#rankingsList li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    background-color: #f7f7f7;
+    border: 0px solid #000000;
+    border-radius: 5px;
+    padding: 5px 30px 5px 30px;
+    justify-content: space-between;
+}
+#rankingsList img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+#rankingsList img:hover::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    z-index: 1000;
+    height: calc(100% - 40px);
+    width: 100%;
+    background-image: inherit;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
+}
+#rankingsList img {
+    transition: all 0.3s ease-in-out;
+}
+#rankingsList img:hover {
+    z-index: 1001;
+}
+.rank {
+    font-weight: bold;
+    margin-right: 10px;
+    width: 40px;
+}
+.image-name {
+    flex-grow: 1;
+    margin-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.elo-uncertainty-container {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
+.elo {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+.uncertainty {
+    display: flex;
+    margin-right: 30px;
+}
+.votes {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+.upvotes, .downvotes {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    font-size: 14px;
+}
+/*
+.eliminated {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    margin-right: 30px;
+    background-color: rgb(228, 13, 67);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+*/
+
+
+
+
+/* ============================ PROGRESS BAR STYLES ============================ */
+.progress-bar {
+    width: calc(100% - 480px); /* Adjust width to avoid overlapping with buttons */
+    height: 10px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin: 0 auto 10px; /* Center the progress bar */
+    overflow: hidden;
+    left: 120px; /* Offset to align with main content */
+}
+#progress-fill {
+    height: 100%;
+    background-color: #000000;
+    width: 0;
+    transition: width 0.5s ease-in-out;
+}
+#progress-text {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+@media (max-width: 768px) {
+    #progress-text {
+        visibility: hidden;
+        height: 0;
+        margin: 0;
+        padding: 0;
+    }
+    .image-comparison {
+        margin-top: 38px; /* Adjust this value as needed */
+    }
+}
+
+/* ============================ FOOTER STYLES ============================ */
 .footer {
     background-color: #f8f8f8;
     padding: 40px 0 20px;
     margin-top: 50px;
     border-top: 1px solid #e7e7e7;
 }
-
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -338,7 +350,6 @@ button:active {
     flex-wrap: wrap;
     padding: 0 20px;
 }
-
 .footer-section {
     flex: 1;
     margin-bottom: 20px;
@@ -346,44 +357,36 @@ button:active {
     padding-left: 15px;
     min-width: 200px;
 }
-
 .footer-section h3 {
     font-size: 18px;
     margin-bottom: 15px;
     color: #333;
 }
-
 .footer-section p {
     font-size: 14px;
     line-height: 1.5;
     color: #666;
 }
-
 .footer-section ul {
     list-style-type: none;
     padding: 0;
 }
-
 .footer-section ul li {
     margin-bottom: 8px;
 }
-
 .footer-section ul li a {
     color: #666;
     text-decoration: none;
     font-size: 14px;
     transition: color 0.3s ease;
 }
-
 .footer-section ul li a:hover {
     color: #000;
 }
-
 .social-icons {
     display: flex;
     gap: 10px;
 }
-
 .social-icon {
     display: inline-flex;
     align-items: center;
@@ -398,7 +401,6 @@ button:active {
     text-decoration: none;
     transition: background-color 0.3s ease;
 }
-
 .social-icon:hover {
     background-color: #000;
     color: white;
@@ -413,45 +415,20 @@ button:active {
     font-size: 14px;
     color: #666;
 }
-
 .footer-bottom a {
     color: #333;
     text-decoration: none;
 }
-
 .footer-bottom a:hover {
     text-decoration: underline;
 }
-
 @media (max-width: 768px) {
     .footer-content {
         flex-direction: column;
     }
-
     .footer-section {
         margin-bottom: 30px;
     }
-}
-
-/*
-.eliminated {
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    margin-right: 30px;
-    background-color: rgb(228, 13, 67);
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-*/
-/* ... existing code ... */
-button.pressed {
-    transform: scale(0.95);
-    background-color: #e0e0e0;
-}
-
-.shortcut {
-    font-size: 12px;
-    color: #666666;
 }
 
 .ad-container {

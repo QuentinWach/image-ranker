@@ -23,7 +23,11 @@
         <div class="progress-bar">
             <div id="progress-fill"></div>
         </div>
+
+        <!-- PROGRESS BAR -->
         <div id="progress-text"></div>
+
+        <!-- IMAGE COMPARISON -->
         <div class="image-comparison">
             <div class="images">
                 <img id="image1" src="" alt="Image 1">
@@ -40,22 +44,32 @@
                 <button id="remove-image2-btn" onclick="removeImage(currentImages['image2'])">Remove Image B</button>
             </div>
         </div>
+
+        <!-- RANKING LIST HEADER -->
         <div class="rankings">
             <h2 style="opacity: 0.2;">Ranking</h2>
             <ul id="rankingsList"></ul>
         </div>
-        <button id="selectDirectoryBtn" class="select-directory-btn">
-            <span class="material-icons">upload</span>
-            Select Local Directory
-        </button>
+
+        <!-- LEFT -->
+        <div class="left-buttons">
+            <button id="selectDirectoryBtn" class="select-directory-btn">
+                <span class="material-icons">upload</span>
+                Select Local Directory
+            </button>
+            <button id="import-comparison-history-btn" class="import-comparison-history-btn">
+                <span class="material-icons">history</span>
+                Import Comparisons
+            </button>
+            </br>
+            <p>Load comparisons from file to resume a previous ranking process.</p>
+        </div>
+
+        <!-- RIGHT -->
         <div class="right-buttons">
             <button id="export-comparisons-btn" class="export-comparisons-btn">
                 <span class="material-icons">save</span>
                 Export Comparisons
-            </button>
-            <button id="import-comparison-history-btn" class="import-comparison-history-btn">
-                <span class="material-icons">upload</span>
-                Import Comparisons
             </button>
             <button id="exportRankingsBtn" class="export-rankings-btn">
                 <span class="material-icons">save</span>
@@ -69,6 +83,7 @@
                 <input type="checkbox" id="autoShuffleToggle">
                 Auto Shuffle Every 3 Comparisons
             </label>
+            <!--
             <div class="social-buttons">
                 <a href="https://github.com/QuentinWach/image-ranker" target="_blank" rel="noopener noreferrer" class="social-button github-button">
                     <span class="material-icons">star</span>
@@ -79,9 +94,11 @@
                     Share on X
                 </a>
             </div>
+            -->
         </div>
     </div>
     
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
@@ -109,7 +126,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 Image Ranker. Made by <a href="https://x.com/QuentinWach" target="_blank">Quentin Wach</a>.</p>
+            <p>&copy; 2024 Image Ranker.</p>
         </div>
     </footer>
     
