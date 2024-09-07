@@ -45,7 +45,7 @@ p {
     max-width: 200px;
     word-wrap: break-word;
     border-radius: 8px;
-    z-index: 1000;
+    z-index: 1500;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s, transform 0.3s;
@@ -55,7 +55,7 @@ p {
 [title]:hover::before {
     position: absolute;
     border: 8px solid transparent;
-    z-index: 1001;
+    z-index: 1501;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s, transform 0.3s;
@@ -81,7 +81,33 @@ p {
     border-top-color: #000000;
 }
 
+/* Adjust positioning for elements near the top of the screen */
+@media (max-height: 100px) {
+    [title]:hover::after {
+        bottom: auto;
+        top: 100%;
+        transform: translateX(-50%) translateY(10px);
+    }
 
+    [title]:hover::before {
+        bottom: auto;
+        top: 100%;
+        transform: translateX(-50%);
+        border-top-width: 0;
+        border-bottom-color: #000000;
+    }
+}
+
+/* Adjust positioning for elements in .right-buttons */
+.right-buttons [title]:hover::after {
+    right: 0%;
+    left: auto;
+    top: 55px;
+    bottom: auto;
+    transform: translateY(0%) translateX(0%);
+}
+
+/* Adjust positioning for elements in .left-buttons */
 .left-buttons [title]:hover::after {
     left: 0%;
     right: auto;
@@ -89,13 +115,7 @@ p {
     bottom: auto;
     transform: translateY(0%) translateX(0%);
 }
-.right-buttons [title]:hover::after {
-    right: 100%;
-    left: auto;
-    top: 55px;
-    bottom: auto;
-    transform: translateY(0%) translateX(47px);
-}
+
 
 /* ============================ MAIN CONTAINER: Includes the image comparison, progress bar, and the ranking list ============================ */
 .container {
@@ -199,7 +219,7 @@ button:active {
     color: #000000;
     border: none;
     flex: 0 0 auto;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
 }
 
 .major-icon-btn:hover {
@@ -366,7 +386,7 @@ button:active {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(1);
-    z-index: 1000;
+    z-index: 500;
     height: calc(100% - 40px);
     width: 100%;
     background-image: inherit;
@@ -380,7 +400,7 @@ button:active {
     transition: all 0.3s ease-in-out;
 }
 #rankingsList img:hover {
-    z-index: 1001;
+    z-index: 501;
 }
 .rank {
     font-weight: bold;
@@ -421,18 +441,22 @@ button:active {
 }
 
 .remove-image-btn {
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    margin-right: 10px;
     margin-left: 30px;
-    background-color: rgb(228, 13, 67);
-    padding: 5px 10px;
-    border-radius: 5px;
+    margin-right: 10px;
 }
 
+/* Ensure the remove button in the ranking list has the same style as other major-icon-btns */
+#rankingsList .major-icon-btn {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    font-size: 18px;
+}
 
-
-
+/* Adjust the ranking list item to accommodate the new button style */
+#rankingsList li {
+    padding-right: 10px;
+}
 
 /* ============================ PROGRESS BAR STYLES ============================ */
 .progress-bar {
@@ -528,8 +552,8 @@ button:active {
     border-radius: 50%;
     border: 2px solid #000;
     background-color: #ffffff;
-    opacity: 50%;
-    color: #fff;
+    opacity: 100%;
+    color: #000000;
     text-decoration: none;
     transition: background-color 0.3s ease;
 }

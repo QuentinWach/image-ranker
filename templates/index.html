@@ -151,6 +151,7 @@
     <script>
         let currentImages = {};
         let max_display = 25;
+        
         function loadImages() {
             fetch('/get_images')
             .then(response => response.json())
@@ -243,7 +244,9 @@
                                 <span class="up-arrow"><i class="material-symbols-rounded">arrow_upward</i>${item.upvotes}</span>
                                 <span class="down-arrow"><i class="material-symbols-rounded">arrow_downward</i>${item.downvotes}</span>
                             </span>
-            <span class="remove-image-btn" onclick="removeImage('${item.image}')">Remove Image</span>
+                            <button class="remove-image-btn major-icon-btn" onclick="removeImage('${item.image}')" title="Remove this image.">
+                                <span class="material-symbols-rounded">delete</span>
+                            </button>
                         `;
                     rankingsList.appendChild(li);
                     
