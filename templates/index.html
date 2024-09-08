@@ -88,6 +88,9 @@
         <!-- RIGHT -->
         <div class="right-buttons">
             <div class="button-row">
+                <button id="exclude-downvoted-btn" class="major-icon-btn" title="Exclude downvoted images from future comparisons.">
+                    <span class="material-symbols-rounded">block</span>
+                </button>
                 <button id="smartShuffleBtn" class="major-icon-btn" title="Smart shuffle: Randomly select the next pair of images from the top of the ranking.">
                     <span class="material-symbols-rounded">shuffle</span>
                 </button>
@@ -133,6 +136,7 @@
             </div>
             <div class="footer-section">
                 <h3>Connect</h3>
+                <p>If you have any questions or suggestions, please reach out!</p>
                 <div class="social-icons">
                     <a href="https://github.com/QuentinWach/image-ranker" target="_blank" class="social-icon github">
                         <span class="material-symbols-rounded">code</span>
@@ -175,6 +179,9 @@
             });
         }
         
+        let excludeDownvoted = false;
+        let excludedImages = new Set();
+        
         function selectWinner(winnerImage) {
             playClickSound();
             const winner = currentImages[winnerImage];
@@ -185,11 +192,18 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ winner, loser }),
+                body: JSON.stringify({ 
+                    winner: winner, 
+                    loser: loser,
+                    exclude_loser: excludeDownvoted
+                }),
             })
             .then(() => {
                 updateRankings();
                 checkAutoShuffle();
+                if (excludeDownvoted) {
+                    excludedImages.add(loser);
+                }
                 loadImages();
             });
         }
@@ -237,7 +251,7 @@
                                 <img src="${imgUrl}" alt="Ranked image" class="ranking-image">
                                 <div class="image-hover"></div>
                             </div>
-                            <span class="image-name">${item.image.split('/').pop()}</span>
+                            <span class="image-name">${item.image.split('/').pop()}${item.excluded ? ' (Excluded)' : ''}</span>
                             <span class="elo"><i class="material-symbols-rounded">star</i><span class="elo-value">${Math.round(item.elo)}</span></span>
                             <span class="uncertainty">± ${Math.round(item.uncertainty)}</span>
                             <span class="votes">
@@ -490,6 +504,33 @@
         
         autoShuffleToggle.addEventListener('click', function() {
             autoShuffleToggle.classList.toggle('active');
+        });
+        
+        document.getElementById('exclude-downvoted-btn').addEventListener('click', function() {
+            this.classList.toggle('active');
+            excludeDownvoted = this.classList.contains('active');
+            if (excludeDownvoted) {
+                alert('Downvoted images will now be excluded from future comparisons.');
+                // Recalculate image pairs
+                fetch('/exclude_image', { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ excluded_image: 'recalculate' })
+                }).then(() => {
+                    loadImages();
+                    updateRankings();
+                });
+            } else {
+                alert('Downvoted images will no longer be excluded from future comparisons.');
+                excludedImages.clear();
+                fetch('/clear_excluded_images', { method: 'POST' })
+                .then(() => {
+                    loadImages();
+                    updateRankings();
+                });
+            }
         });
     </script>
 </body>
