@@ -313,4 +313,4 @@ def clear_excluded_images():
 
 if __name__ == '__main__':
     initialize_image_pairs()
-    app.run(debug=True)
+    app.run(debug=False)
