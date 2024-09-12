@@ -44,7 +44,8 @@
 5. Open a web browser and navigate to `http://localhost:5000`.
 
 ---
-## TrueSkill ELO: How Does It Work?
+## ❓ How It Works
+### TrueSkill ELO
 Each image is represented by two values:
 - μ (mu): The estimated "skill" level.
 - σ (sigma): The uncertainty in that estimate.
@@ -59,20 +60,17 @@ Importantly, the algorithm updates all previously ranked items simultaneously wi
 
 Thus, overall, this system allows for efficient ranking with incomplete comparison data, making it well-suited for large sets of items where exhaustive pairwise comparisons are impractical!
 
-## Why? Reinforcement Learning with Human Feedback (RLHF)
-Post-training foundation models is what makes them actually useful. For example, large language models may not even chat with you without post-training. The same is true for images. In order to do so, a common technique is [RLHF](https://huggingface.co/docs/trl/main/en/index), which uses a reward model to reward or punish the output of the generative foundation model based on user preferences. In order to create this reward model, we need to know the user preferences which requires a dataset, here images. So whether it is to make some radical changes to an already existing model like Stable Diffusion or Flux, or to train your own model, it is important to be able to rank the images somehow to know which images are better. This is where this app comes in.
-<!--
-## What's Next?
-Once you have a dataset of images, you can use this app to rank them. You can then use the ranked dataset to train your reward model. Which you can then use to fine-tune your generative model. You might want to look into the following:
-+ [Transformer Reinforcement Learning (TRL) (huggingface.co)](https://huggingface.co/docs/trl/main/en/index): TRL is a library for training language models using reinforcement learning techniques. It provides tools and utilities to implement RLHF and other RL algorithms for fine-tuning language models based on human preferences or other reward signals.
-+ [PEFT (Parameter-Efficient Fine-Tuning) (huggingface.co)](https://huggingface.co/blog/trl-peft): PEFT is a technique to fine-tune language models using only a small subset of the model's parameters, making it much more efficient than full-parameter fine-tuning.
-+ [Reward Model Training (medium.com)](https://medium.com/towards-generative-ai/reward-model-training-2209d1befb5f): This article provides a comprehensive guide to training a reward model for language models.
-+ [RLHF for LLMs (superannotate.com)](https://www.superannotate.com/blog/rlhf-for-llm)
-+ [RLHF (labellerr.com)](https://www.labellerr.com/blog/reinforcement-learning-from-human-feedback/)
--->
+### Sequential Elimination
+You have the option to enable _sequential elimination_ to rank $N$ images in $\mathcal{O}(N)$-time rather than $\mathcal{O}(N \times (N-1)/2)$ by eliminating images from the ranking that have been down voted. This is a great way to rank images when you have a large number of images, or when you want to rank images quickly. It's a good first step to take to get a quick ranking of images and then disable to get a more precise ranking.
 
+### Smart & Auto-Shuffle
+You can manually shuffle image pairs at any time by clicking the shuffle button or automatically shuffle every three comparisons. This is useful if you want to minimize the uncertainty of the ranking as fast as possible. Images that have only been ranked a few times and have a high uncertainty (σ) will be prioritized. This way, you don't spend more time ranking images that you are already certain about but can get a more accurate ranking of images with very similar scores faster.
+
+---
 ## About
-**Image Ranker** is part of a part of project to enable anyone to create their own _foundation_ models custom tailored to their specific needs. More on that soon.
+**Image Ranker** is part of a part of project to enable anyone to create their own _foundation_ models custom tailored to their specific needs.
+
+Post-training foundation models is what makes them actually useful. For example, large language models may not even chat with you without post-training. The same is true for images. In order to do so, a common technique is [RLHF](https://huggingface.co/docs/trl/main/en/index), which uses a reward model to reward or punish the output of the generative foundation model based on user preferences. In order to create this reward model, we need to know the user preferences which requires a dataset, here images. So whether it is to make some radical changes to an already existing model like Stable Diffusion or Flux, or to train your own model, it is important to be able to rank the images somehow to know which images are better. This is where this app comes in.
 
 ## Contributing
 If you have any questions, please open an issue on GitHub! And feel free to fork this project, to suggest or contribute new features. The `OPEN_TODO.md` file contains a list of features that are planned to be implemented. Help is very much appreciated! That said, the easiest way to support the project is to **give this repo a ⭐!**
