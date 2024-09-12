@@ -17,7 +17,10 @@
 
 ## ✨ Core Features
 - **TrueSkill ELO algorithm.** An advanced algorithm that takes into account the uncertainty in the ratings and updates the ranks **globally** after each comparison since if $A > B$ and $B > C$ then we can infer that $A > C$. This achieves accurate results much faster than a typical ELO algorithm.
-- **Various advanced ranking speedups.** Rank $N$ images in $\mathcal{O}(N)$-time rather than $\mathcal{O}(N \times (N-1)/2)$ by eliminating images from the ranking that have been down voted and shuffle images to minimize uncertainty as fast as possible. <!-- - **1v1 or best-of-four ranking.** You can choose to rank images 1v1 or pick the best image out of four images. The best-of-four is much faster, but the 1v1 is more accurate.-->
+- **Various advanced ranking speedups.** 
+  - **Sequential elimination.** Option to rank $N$ images in $\mathcal{O}(N)$-time rather than $\mathcal{O}(N \times (N-1)/2)$ by eliminating images from the ranking that have been down voted.
+  - **Smart shuffle.** Shuffles all the images in such a way as to minimize the uncertainty of the ranking as fast as possible.
+  - **Auto-shuffle.** Applies a smart shuffle every three comparisons automatically.
 - **Web GUI for easy use.**
 - **Select images from a local directory without needing to upload or move them.**
 - **Export and save ranking data as CSV. Resume at any time.**
