@@ -68,7 +68,7 @@ You can manually shuffle image pairs at any time by clicking the shuffle button 
 
 ---
 ## About
-**Image Ranker** is part of a part of project to enable anyone to create their own _foundation_ models custom tailored to their specific needs.
+**Image Ranker** is part of a part of the overall effort to enable anyone to create their own _foundation_ models custom tailored to their specific needs.
 
 Post-training foundation models is what makes them actually useful. For example, large language models may not even chat with you without post-training. The same is true for images. In order to do so, a common technique is [RLHF](https://huggingface.co/docs/trl/main/en/index), which uses a reward model to reward or punish the output of the generative foundation model based on user preferences. In order to create this reward model, we need to know the user preferences which requires a dataset, here images. So whether it is to make some radical changes to an already existing model like Stable Diffusion or Flux, or to train your own model, it is important to be able to rank the images somehow to know which images are better. This is where this app comes in.
 
