@@ -23,8 +23,10 @@
         'opsz' 24
         }
     </style>
+    <!--
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8803344579810006"
     crossorigin="anonymous"></script>
+    -->
 </head>
 <body>
     <div class="container">
@@ -153,7 +155,7 @@
     
     <script>
         let currentImages = {};
-        let max_display = 25;
+        let max_display = 30;
         
         function loadImages() {
             fetch('/get_images')
@@ -263,25 +265,27 @@
                         `;
                     rankingsList.appendChild(li);
                     
+                    <!--
                     // Add Google Ad after every 10th image
-                    if ((index + 1) % 10 === 0 && index !== data.length - 1) {
-                        const adLi = document.createElement('li');
-                        adLi.className = 'ad-container';
-                        adLi.innerHTML = `
-                                <ins class="adsbygoogle"
-                                    style="display:block"
-                                    data-ad-format="fluid"
-                                    data-ad-layout-key="-6t+ed+2i-1n-4w"
-                                    data-ad-client="ca-pub-8803344579810006"
-                                    data-ad-slot="4041607466"></ins>
-                            `;
-                        rankingsList.appendChild(adLi);
+                    //if ((index + 1) % 10 === 0 && index !== data.length - 1) {
+                    //   const adLi = document.createElement('li');
+                    //   adLi.className = 'ad-container';
+                    //    adLi.innerHTML = `
+                    //            <ins class="adsbygoogle"
+                    //                style="display:block"
+                    //                data-ad-format="fluid"
+                    //                data-ad-layout-key="-6t+ed+2i-1n-4w"
+                    //                data-ad-client="ca-pub-8803344579810006"
+                    //                data-ad-slot="4041607466"></ins>
+                    //        `;
+                    //    rankingsList.appendChild(adLi);
                         
-                        // Push the ad to Google
-                        if (typeof adsbygoogle !== 'undefined' && adsbygoogle.loaded === false) {
-                            (adsbygoogle = window.adsbygoogle || []).push({});
-                        }
-                    }
+                    //    // Push the ad to Google
+                    //    if (typeof adsbygoogle !== 'undefined' && adsbygoogle.loaded === false) {
+                    //        (adsbygoogle = window.adsbygoogle || []).push({});
+                    //    }
+                    //}
+                    -->
                 });
                 
                 // Add event listeners for hover effect
@@ -299,10 +303,12 @@
                     });
                 });
                 
+                <!--
                 // Ensure ads are loaded after the DOM is updated
                 setTimeout(() => {
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 }, 100);
+                -->
             });
         }
         
