@@ -492,6 +492,523 @@ button:active {
 }
 
 /* ============================ FOOTER STYLES ============================ */
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid #e7e7e7;
+    font-size: 14px;
+    color: #666;
+}
+.footer-bottom a {
+    color: #333;
+    text-decoration: none;
+}
+.footer-bottom a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+    }
+    .footer-section {
+        margin-bottom: 30px;
+    }
+}
+/* ============================ BASIC STYLES ============================ */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    text-align: center;
+}
+p {
+    margin: 0;
+    padding: 0;
+}
+/*
+.material-icons {
+    font-size: 18px;
+    margin-right: 2px;
+    color: #000000;
+}
+*/
+.material-symbols-rounded {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+/* SPEECH BUBBLE POP UP WHEN HOVERING OVER ELEMENTS */
+[title] {
+    position: relative;
+}
+
+[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    padding: 8px 12px;
+    background-color: #000000;
+    color: #fff;
+    font-size: 14px;
+    white-space: normal;
+    min-width: 150px;
+    max-width: 200px;
+    word-wrap: break-word;
+    border-radius: 8px;
+    z-index: 1500;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+[title]:hover::before {
+    position: absolute;
+    border: 8px solid transparent;
+    z-index: 1501;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+[title]:hover::after,
+[title]:hover::before {
+    opacity: 1;
+}
+
+/* Default positioning (above the element) */
+[title]:hover::after {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+[title]:hover::before {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom-width: 0;
+    border-top-color: #000000;
+}
+
+/* Adjust positioning for elements near the top of the screen */
+@media (max-height: 100px) {
+    [title]:hover::after {
+        bottom: auto;
+        top: 100%;
+        transform: translateX(-50%) translateY(10px);
+    }
+
+    [title]:hover::before {
+        bottom: auto;
+        top: 100%;
+        transform: translateX(-50%);
+        border-top-width: 0;
+        border-bottom-color: #000000;
+    }
+}
+
+/* Adjust positioning for elements in .right-buttons */
+.right-buttons [title]:hover::after {
+    right: 0%;
+    left: auto;
+    top: 55px;
+    bottom: auto;
+    transform: translateY(0%) translateX(0%);
+}
+
+/* Adjust positioning for elements in .left-buttons */
+.left-buttons [title]:hover::after {
+    left: 0%;
+    right: auto;
+    top: 55px;
+    bottom: auto;
+    transform: translateY(0%) translateX(0%);
+}
+
+
+/* ============================ MAIN CONTAINER: Includes the image comparison, progress bar, and the ranking list ============================ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 20px;
+}
+
+/* IMAGE COMPARISON STYLES */
+.image-comparison {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.images {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+}
+.images img {
+    width: 48%;
+    height: auto;
+    max-height: 70vh;
+    border-radius: 0px;
+    object-fit: contain;
+}
+.image-names {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.image-names span {
+    width: 48%;
+    text-align: center;
+    font-size: 14px;
+    color: #66666683;
+    background-color: #ffffff;
+    border-radius: 15px;
+}
+
+/* ============================ BUTTON STYLES ============================ */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+}
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.1s, transform 0.05s;
+    border: 2px solid #000000;
+    color: #000000;
+    background-color: #ffffff;
+}
+button:hover {
+    background-color: #000000;
+    transform: scale(1.02);
+    transform: translateY(-3px);
+    box-shadow: 0 3px 5px #00000086;
+    color: white;
+}
+button:active {
+    transform: scale(0.98);
+}
+/* Comment inside buttons to explain their function */
+.shortcut {
+    font-size: 12px;
+    color: #666666;
+}
+
+.button-group {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+#image1-btn, #image2-btn {
+    width: 100%;
+}
+
+.major-icon-btn {
+    width: 47px;
+    height: 47px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    color: #000000;
+    border: none;
+    flex: 0 0 auto;
+    transition: all 0.1s ease;
+}
+
+.major-icon-btn:hover {
+    background-color: #000000;
+    color: white;
+}
+
+.major-icon-btn.active {
+    background-color: #000000;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Buttons on the left side of the screen */
+.left-buttons {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+}
+
+/* Button to import files */
+.main-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 2px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.1s, transform 0.05s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-btn:hover {
+    background-color: #000000;
+    color: white;
+}
+.main-btn:hover .material-symbols-rounded {
+    color: white;
+}
+.main-btn:active {
+    transform: scale(0.98);
+}
+
+
+.left-buttons p {
+    font-size: 12px;
+    color: #666;
+    max-width: 450px;
+}
+
+/* Buttons for the right side of the screen */
+.right-buttons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+
+.export-rankings-btn {
+    width: 220px;
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 2px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.1s, transform 0.05s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.export-rankings-btn:hover .material-icons {
+    color: white;
+}
+.export-rankings-btn:hover {
+    background-color: #000000;
+    transform: scale(1.02);
+}
+.export-rankings-btn:active {
+    transform: scale(0.98);
+}
+
+
+.social-buttons {
+    flex-direction: column;
+    align-items: flex-end;
+    opacity: 0.3;
+}
+.social-button {
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 2px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.1s, transform 0.05s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+.social-button:hover {
+    background-color: #000000;
+    color: white;
+    transform: scale(1.02);
+}
+.social-button:hover .material-icons {
+    color: white;
+}
+.social-button:active {
+    transform: scale(0.98);
+}
+
+
+
+
+/* ============================ RANKINGS LIST STYLES ============================ */
+.rankings {
+    margin-top: 40px;
+}
+#rankingsList {
+    list-style-type: none;
+    padding: 0;
+}
+#rankingsList li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    background-color: #f7f7f7;
+    border: 0px solid #000000;
+    border-radius: 5px;
+    padding: 5px 30px 5px 30px;
+    justify-content: space-between;
+}
+#rankingsList img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+#rankingsList img:hover::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    z-index: 500;
+    height: calc(100% - 40px);
+    width: 100%;
+    background-image: inherit;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
+}
+#rankingsList img {
+    transition: all 0.3s ease-in-out;
+}
+#rankingsList img:hover {
+    z-index: 501;
+}
+.rank {
+    font-weight: bold;
+    margin-right: 10px;
+    width: 40px;
+}
+.image-name {
+    flex-grow: 1;
+    margin-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.elo-uncertainty-container {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
+.elo {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+.uncertainty {
+    display: flex;
+    margin-right: 30px;
+}
+.votes {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+.upvotes, .downvotes {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.remove-image-btn {
+    margin-left: 30px;
+    margin-right: 10px;
+}
+
+/* Ensure the remove button in the ranking list has the same style as other major-icon-btns */
+#rankingsList .major-icon-btn {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    font-size: 18px;
+}
+
+/* Adjust the ranking list item to accommodate the new button style */
+#rankingsList li {
+    padding-right: 10px;
+}
+
+/* ============================ PROGRESS BAR STYLES ============================ */
+.progress-bar {
+    width: calc(100% - 480px); /* Adjust width to avoid overlapping with buttons */
+    height: 10px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin: 0 auto 10px; /* Center the progress bar */
+    overflow: hidden;
+    left: 120px; /* Offset to align with main content */
+}
+#progress-fill {
+    height: 100%;
+    background-color: #000000;
+    width: 0;
+    transition: width 0.5s ease-in-out;
+}
+#progress-text {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+@media (max-width: 768px) {
+    #progress-text {
+        visibility: hidden;
+        height: 0;
+        margin: 0;
+        padding: 0;
+    }
+    .image-comparison {
+        margin-top: 38px; /* Adjust this value as needed */
+    }
+}
+
+/* ============================ FOOTER STYLES ============================ */
 .footer {
     background-color: #f8f8f8;
     padding: 40px 0 20px;

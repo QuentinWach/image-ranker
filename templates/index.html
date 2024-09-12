@@ -243,13 +243,20 @@
                 const rankingsList = document.getElementById('rankingsList');
                 rankingsList.innerHTML = '';
                 data.forEach((item, index) => {
-                    display_count+=1
+                    display_count += 1
                     const li = document.createElement('li');
-                    let imgUrl = display_count > max_display? "" : '/serve_image?path=' + item.image;
+                    let imgHtml;
+                    if (display_count <= max_display) {
+                        imgHtml = `<img src="/serve_image?path=${item.image}" alt="Ranked image" class="ranking-image">`;
+                    } else {
+                        imgHtml = `<div class="empty-image-placeholder">
+                                       <span class="material-symbols-rounded">image</span>
+                                   </div>`;
+                    }
                     li.innerHTML = `
                             <span class="rank">#${index + 1}</span>
                             <div class="image-container">
-                                <img src="${imgUrl}" alt="Ranked image" class="ranking-image">
+                                ${imgHtml}
                                 <div class="image-hover"></div>
                             </div>
                             <span class="image-name">${item.image.split('/').pop()}${item.excluded ? ' (Excluded)' : ''}</span>
@@ -287,22 +294,25 @@
                     //}
                     -->
                 });
-                
-                // Add event listeners for hover effect
-                document.querySelectorAll('.image-container').forEach(container => {
-                    const img = container.querySelector('.ranking-image');
-                    const hoverDiv = container.querySelector('.image-hover');
-                    
-                    img.addEventListener('mouseenter', () => {
-                        hoverDiv.style.backgroundImage = `url(${img.src})`;
-                        hoverDiv.style.display = 'block';
-                    });
-                    
-                    img.addEventListener('mouseleave', () => {
-                        hoverDiv.style.display = 'none';
+                     
+                    // Add event listeners for hover effect
+                    document.querySelectorAll('.image-container').forEach(container => {
+                        const img = container.querySelector('.ranking-image');
+                        const hoverDiv = container.querySelector('.image-hover');
+                        
+                        if (img) {
+                            img.addEventListener('mouseenter', () => {
+                                hoverDiv.style.backgroundImage = `url(${img.src})`;
+                                hoverDiv.style.display = 'block';
+                            });
+                            
+                            img.addEventListener('mouseleave', () => {
+                                hoverDiv.style.display = 'none';
+                            });
+                        }
                     });
                 });
-                
+                                
                 <!--
                 // Ensure ads are loaded after the DOM is updated
                 setTimeout(() => {

@@ -1,5 +1,4 @@
 ## Primary
-- Eliminate images from the ranking process for even faster results when down-voted.
 - Best of four ranking option instead of 1v1.
 - Import corresponding text-prompts for each image.
 - Regularly save the ranking file in case there is some error.
