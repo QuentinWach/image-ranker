@@ -136,14 +136,18 @@ def serve_image():
 comparisons_since_autosave = 0
 
 def autosave_rankings():
-    global elo_ranking
+    global elo_ranking, current_directory
     
+    if not current_directory:
+        app.logger.warning("No image directory selected. Autosave aborted.")
+        return
+
     # Get current date
     current_date = datetime.now().strftime("%Y-%m-%d")
     
     # Save rankings
     rankings = elo_ranking.get_rankings()
-    rankings_filename = f'image_rankings_autosave_{current_date}.csv'
+    rankings_filename = os.path.join(current_directory, f'image_rankings_autosave_{current_date}.csv')
     with open(rankings_filename, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(['Image', 'ELO', 'Uncertainty', 'Upvotes', 'Downvotes'])
@@ -158,7 +162,7 @@ def autosave_rankings():
     
     # Save comparisons
     comparisons = elo_ranking.comparison_history
-    comparisons_filename = f'comparisons_autosave_{current_date}.csv'
+    comparisons_filename = os.path.join(current_directory, f'comparisons_autosave_{current_date}.csv')
     with open(comparisons_filename, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(['Winner', 'Loser'])
@@ -168,7 +172,7 @@ def autosave_rankings():
             else:
                 writer.writerow([winner, loser])
 
-    app.logger.info(f"Autosave completed. Files saved: {rankings_filename}, {comparisons_filename}")
+    app.logger.info(f"Autosave completed. Files saved in {current_directory}: {os.path.basename(rankings_filename)}, {os.path.basename(comparisons_filename)}")
 
 @app.route('/update_elo', methods=['POST'])
 def update_elo():

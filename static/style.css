@@ -132,9 +132,10 @@ p {
 
 .current-directory {
     font-size: 14px;
+    font-weight: 500;
     color: #9b9b9b;
     background-color: #ffffff;
-    max-width: 220px;
+    max-width: 230px;
     border-radius: 5px;
     padding: 5px 10px;
     display: flex;
@@ -148,7 +149,7 @@ p {
 .current-directory:hover {
     color: black;
     background-color: #ffffff;
-    opacity: 1.;
+    opacity: 1.0;
 }
 
 
