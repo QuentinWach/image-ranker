@@ -9,6 +9,7 @@ import csv
 from io import StringIO
 import logging
 import threading
+from threading import Thread
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -177,11 +178,15 @@ def get_progress():
 @app.route('/select_directory', methods=['POST'])
 def select_directory():
     try:
-        root = tk.Tk()
-        root.withdraw()
-        root.attributes('-topmost', True)
-        directory = filedialog.askdirectory(master=root)
-        root.destroy()
+        def directory_selection():
+            nonlocal directory
+            directory = open_directory_dialog()
+
+        directory = None
+        thread = Thread(target=directory_selection)
+        thread.start()
+        thread.join()
+
         if directory:
             global IMAGE_FOLDER, elo_ranking, image_pairs, current_pair_index
             IMAGE_FOLDER = directory
@@ -193,6 +198,14 @@ def select_directory():
             return jsonify({'success': False, 'error': 'No directory selected'})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
+def open_directory_dialog():
+    root = tk.Tk()
+    root.withdraw()
+    root.attributes('-topmost', True)
+    directory = filedialog.askdirectory(master=root)
+    root.destroy()
+    return directory
 
 @app.route('/export_rankings')
 def export_rankings():
@@ -313,4 +326,4 @@ def clear_excluded_images():
 
 if __name__ == '__main__':
     initialize_image_pairs()
-    app.run(debug=False)
+    app.run(debug=False, threaded=True)
