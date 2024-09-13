@@ -10,6 +10,7 @@ from io import StringIO
 import logging
 import threading
 from threading import Thread
+from datetime import datetime
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -19,6 +20,9 @@ excluded_images = set()
 
 IMAGE_FOLDER = 'static/images'
 image_pairs_lock = threading.Lock()
+
+# Add this global variable near the top of the file
+current_directory = None
 
 def get_image_paths():
     image_paths = []
@@ -128,8 +132,47 @@ def serve_image():
         mimetype = 'image/jpeg'
     return send_file(image_path, mimetype=mimetype)
 
+# Add this global variable to keep track of comparisons since last autosave
+comparisons_since_autosave = 0
+
+def autosave_rankings():
+    global elo_ranking
+    
+    # Get current date
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    
+    # Save rankings
+    rankings = elo_ranking.get_rankings()
+    rankings_filename = f'image_rankings_autosave_{current_date}.csv'
+    with open(rankings_filename, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['Image', 'ELO', 'Uncertainty', 'Upvotes', 'Downvotes'])
+        for image, rating in rankings:
+            writer.writerow([
+                image,
+                round(rating.mu, 2),
+                round(rating.sigma, 2),
+                elo_ranking.upvotes.get(image, 0),
+                elo_ranking.downvotes.get(image, 0)
+            ])
+    
+    # Save comparisons
+    comparisons = elo_ranking.comparison_history
+    comparisons_filename = f'comparisons_autosave_{current_date}.csv'
+    with open(comparisons_filename, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(['Winner', 'Loser'])
+        for winner, loser in comparisons:
+            if winner is None:
+                writer.writerow(['None', loser])
+            else:
+                writer.writerow([winner, loser])
+
+    app.logger.info(f"Autosave completed. Files saved: {rankings_filename}, {comparisons_filename}")
+
 @app.route('/update_elo', methods=['POST'])
 def update_elo():
+    global comparisons_since_autosave
     data = request.json
     winner = data['winner']
     loser = data['loser']
@@ -138,6 +181,13 @@ def update_elo():
         excluded_images.add(loser)
         # Recalculate image pairs
         initialize_image_pairs()
+    
+    # Increment the counter and check if it's time to autosave
+    comparisons_since_autosave += 1
+    if comparisons_since_autosave >= 10:
+        autosave_rankings()
+        comparisons_since_autosave = 0
+    
     return jsonify({'success': True})
 
 @app.route('/remove_image', methods=['POST'])
@@ -188,12 +238,14 @@ def select_directory():
         thread.join()
 
         if directory:
-            global IMAGE_FOLDER, elo_ranking, image_pairs, current_pair_index
+            global IMAGE_FOLDER, elo_ranking, image_pairs, current_pair_index, comparisons_since_autosave, current_directory
             IMAGE_FOLDER = directory
+            current_directory = directory  # Save the selected directory
             elo_ranking = TrueSkillRanking()  # Reset the ELO rankings
             initialize_image_pairs()
             current_pair_index = 0  # Reset the current pair index
-            return jsonify({'success': True})
+            comparisons_since_autosave = 0  # Reset the autosave counter
+            return jsonify({'success': True, 'directory': directory})
         else:
             return jsonify({'success': False, 'error': 'No directory selected'})
     except Exception as e:
@@ -323,6 +375,12 @@ def clear_excluded_images():
     # Recalculate image pairs
     initialize_image_pairs()
     return jsonify({'success': True})
+
+# Add a new route to get the current directory
+@app.route('/get_current_directory')
+def get_current_directory():
+    global current_directory
+    return jsonify({'directory': current_directory if current_directory else None})
 
 if __name__ == '__main__':
     initialize_image_pairs()

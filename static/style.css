@@ -116,6 +116,41 @@ p {
     transform: translateY(0%) translateX(0%);
 }
 
+.left-buttons {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+}
+
+.current-directory {
+    font-size: 14px;
+    color: #9b9b9b;
+    background-color: #ffffff;
+    max-width: 220px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    margin-top: 5px; /* Add some space between the buttons and the directory text */
+    transition: all 0.1s ease;
+    opacity: 0.5;
+    z-index: -10;
+}
+
+.current-directory:hover {
+    color: black;
+    background-color: #ffffff;
+    opacity: 1.;
+}
+
 
 /* ============================ MAIN CONTAINER: Includes the image comparison, progress bar, and the ranking list ============================ */
 .container {

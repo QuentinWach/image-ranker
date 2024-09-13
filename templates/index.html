@@ -85,6 +85,7 @@
                     <span class="material-symbols-rounded">history</span>
                 </button>
             </div>
+            <div id="currentDirectory" class="current-directory">Not selected</div>
         </div>
 
         <!-- RIGHT -->
@@ -351,6 +352,8 @@
                     document.getElementById('progress-text').textContent = 'Progress: 0 / 0 comparisons';
                     loadImages();
                     updateRankings();
+                    // Update the current directory display
+                    document.getElementById('currentDirectory').textContent = 'Image Directory: ' + data.directory;
                 } else {
                     throw new Error(data.error || 'Unknown error occurred');
                 }
@@ -360,6 +363,26 @@
                 alert('An error occurred while selecting the directory: ' + (error.message || error));
             });
         });
+        
+        // Function to load the current directory on page load
+        function loadCurrentDirectory() {
+            fetch('/get_current_directory')
+            .then(response => response.json())
+            .then(data => {
+                if (data.directory) {
+                    document.getElementById('currentDirectory').textContent = 'Image Directory: ' + data.directory;
+                } else {
+                    document.getElementById('currentDirectory').textContent = 'Image Directory: Not selected';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading current directory:', error);
+                document.getElementById('currentDirectory').textContent = 'Image Directory: Error loading';
+            });
+        }
+        
+        // Call the function when the page loads
+        window.addEventListener('load', loadCurrentDirectory);
         
         document.getElementById('exportRankingsBtn').addEventListener('click', function() {
             fetch('/export_rankings')
