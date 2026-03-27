@@ -16,6 +16,9 @@
     <a href="https://github.com/QuentinWach/image-ranker/commits/main">
       <img src="https://img.shields.io/github/last-commit/QuentinWach/image-ranker" alt="Last update">
     </a>
+    <a href="https://doi.org/10.5281/zenodo.19264460">
+      <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.19264460.svg" alt="DOI">
+    </a>
   </p>
 </div>
 
@@ -156,6 +159,23 @@ You can manually shuffle image pairs at any time by clicking the shuffle button 
 Post-training foundation models is what makes them actually useful. For example, large language models may not even chat with you without post-training. The same is true for images. In order to do so, a common technique is [RLHF](https://huggingface.co/docs/trl/main/en/index), which uses a reward model to reward or punish the output of the generative foundation model based on user preferences. In order to create this reward model, we need to know the user preferences which requires a dataset, here images. So whether it is to make some radical changes to an already existing model like Stable Diffusion or Flux, or to train your own model, it is important to be able to rank the images somehow to know which images are better. This is where this app comes in.
 
 ## Contributing
-If you have any questions, please open an issue on GitHub! And feel free to fork this project, to suggest or contribute new features. The `OPEN_TODO.md` file contains a list of features that are planned to be implemented. Help is very much appreciated! That said, the easiest way to support the project is to **give this repo a ⭐!**
+If you have any questions, please open an issue on GitHub! And feel free to fork this project, to suggest or contribute new features. The `OPEN_TODO.md` file contains a list of features that are planned to be implemented. Help is very much appreciated! That said, the easiest way to support the project is to **give this repo a star!** Thank you!
 
-Thank you!
+## Citation
+If you use Image Ranker in your research or projects, please cite it as:
+
+```bibtex
+@software{wach_image_ranker_2026,
+  author       = {Wach, Quentin},
+  title        = {Image Ranker: Fast Open-Source Pairwise Ranking for Human Preference Learning using TrueSkill},
+  year         = {2026},
+  publisher    = {Zenodo},
+  version      = {v1.0.1},
+  doi          = {10.5281/zenodo.19264460},
+  url          = {https://doi.org/10.5281/zenodo.19264460}
+}
+```
+
+Alternatively, you can cite it in plain text:
+
+Quentin Wach. (2026). Image Ranker: Fast Open-Source Pairwise Ranking for Human Preference Learning using TrueSkill (v1.0.1). Zenodo. https://doi.org/10.5281/zenodo.19264460
