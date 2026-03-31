@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata from this file."
+title: "Image Ranker"
+type: software
+authors:
+  - family-names: "Wach"
+    given-names: "Quentin"
+version: "1.0.0"
+date-released: 2026-03-22
+license: "MIT"
+abstract: "Pairwise image ranking web app powered by TrueSkill and Flask."
+keywords:
+  - "image ranking"
+  - "pairwise comparison"
+  - "TrueSkill"
+  - "Flask"
+repository-code: "https://github.com/QuentinWach/image-ranker"
+url: "https://github.com/QuentinWach/image-ranker"
